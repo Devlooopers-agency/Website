@@ -1,9 +1,277 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Selected devlooopers work."><title>Work — devlooopers</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head>
-<body data-page="work"><div class="noise"></div><div class="page-wipe"></div>
-<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark"><span></span></span><span class="brand-text">devlooopers</span></a><button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button><nav class="nav"><a href="index.html">Home</a><a class="active" href="work.html">Work</a><a href="services.html">Services</a><a href="about.html">Studio</a><a class="nav-cta" href="contact.html">Start a project <span>↗</span></a></nav></header>
-<main><section class="page-hero shell"><div class="section-kicker reveal">01 / SELECTED WORK</div><h1 class="display reveal delay-1">Built for <span class="gradient-text">momentum.</span></h1><p class="hero-lead narrow reveal delay-2">A mix of product systems, experimental web experiences and intelligent tools. Every project starts with a different question.</p></section>
-<section class="section shell work-list"><article class="case-study reveal" id="orbit"><div class="case-art art-orbit"><div class="mini-orbit big"></div><span class="case-id">01</span></div><div class="case-copy"><div class="section-kicker">OPERATIONS / PRODUCT</div><h2>Orbit Logistics</h2><p>A calm operations command centre that turns noisy logistics data into decisions teams can act on. Dense information, simplified hierarchy and tactile micro-interactions.</p><div class="tag-row"><span>UX Strategy</span><span>Product Design</span><span>Frontend</span></div></div></article>
-<article class="case-study reversed reveal" id="nova"><div class="case-art art-nova"><div class="nova-sphere big"></div><span class="case-id">02</span></div><div class="case-copy"><div class="section-kicker">3D / WEBGL</div><h2>Nova Spaces</h2><p>An editorial launch experience with a spatial navigation layer. Visitors explore the product through depth, motion and ambient transitions instead of a standard page stack.</p><div class="tag-row"><span>Creative Dev</span><span>Three.js</span><span>Motion</span></div></div></article>
-<article class="case-study reveal" id="loop"><div class="case-art art-loop"><div class="loop-symbol big">∞</div><span class="case-id">03</span></div><div class="case-copy"><div class="section-kicker">AI / PLATFORM</div><h2>Loop Intelligence</h2><p>A workflow layer that connects company knowledge, conversations and repeatable actions. The interface keeps AI useful by making every automated step visible and editable.</p><div class="tag-row"><span>AI UX</span><span>Systems Design</span><span>Automation</span></div></div></article>
-</section><section class="section shell final-cta"><div class="cta-panel reveal"><div class="section-kicker">04 / YOUR TURN</div><h2>Let's make your next <span class="gradient-text">case study.</span></h2><a class="button primary" href="contact.html">Start a conversation <span>↗</span></a></div></section></main>
-<footer class="site-footer shell"><div>© 2026 devlooopers</div><div>Design × Code × Curiosity</div><div><a href="contact.html">Contact</a></div></footer><script src="script.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Selected devlooopers work.">
+  <title>Work — devlooopers</title>
+  <link rel="icon" type="image/png" href="assets/devlooopers-logo-d.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="work">
+<div class="noise"></div>
+
+<!-- Custom Interactive Magnetic Cursor (Desktop) -->
+<div class="custom-cursor" id="customCursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring">
+    <span class="cursor-icon"></span>
+    <span class="cursor-label"></span>
+  </div>
+</div>
+
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="devlooopers home" data-cursor="HOME">
+    <img src="assets/devlooopers-logo-d.png" alt="devlooopers icon" class="brand-logo-icon">
+    <img src="assets/devlooopers-logo.png" alt="devlooopers" class="brand-logo-text">
+  </a>
+  <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+  <nav class="nav">
+    <a href="index.html" data-cursor="HOME">Home</a>
+    <a class="active" href="work.html" data-cursor="WORK">Work</a>
+    <a href="services.html" data-cursor="SERVICES">Services</a>
+    <a href="about.html" data-cursor="STUDIO">Studio</a>
+    <a class="nav-cta" href="contact.html" data-cursor="START">Start a project <span>↗</span></a>
+  </nav>
+</header>
+
+<main>
+  <section class="work-gallery-section" id="workGallerySection">
+    <div class="work-sticky-wrapper" id="workStickyWrapper">
+      <div class="work-gallery-header shell">
+        <div class="work-hud-info">
+          <div class="section-kicker">01 / SELECTED WORK</div>
+          <div class="work-current-title-wrap">
+            <span class="work-hud-counter" id="workHudCounter">01 / 03</span>
+            <span class="work-hud-divider">·</span>
+            <span class="work-hud-name" id="workHudName">ORBIT LOGISTICS</span>
+          </div>
+        </div>
+        <div class="work-hud-controls">
+          <span class="work-drag-hint" id="workDragHint">← SCROLL / DRAG TO EXPLORE →</span>
+          <span class="mobile-swipe-indicator" id="mobileSwipeIndicator"><span>👈</span> SWIPE CARDS <span>👉</span></span>
+          <div class="work-nav-arrows">
+            <button class="work-arrow-btn" id="workPrevBtn" aria-label="Previous project" data-cursor="PREV">‹</button>
+            <button class="work-arrow-btn" id="workNextBtn" aria-label="Next project" data-cursor="NEXT">›</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Viewport for Horizontal Interactive 3D Stage -->
+      <div class="work-gallery-viewport" id="workGalleryViewport">
+        <div class="work-gallery-track" id="workGalleryTrack">
+          
+          <!-- PROJECT 01: ORBIT LOGISTICS -->
+          <article class="work-project-stage active" data-index="0" data-project="orbit" id="orbit">
+            <div class="work-stage-card">
+              <div class="card-glare"></div>
+              <div class="work-stage-visual art-orbit">
+                <div class="scene-orbit" id="workOrbitScene">
+                  <div class="orbit-glow"></div>
+                  <svg class="orbit-svg" viewBox="0 0 300 300" aria-hidden="true">
+                    <ellipse class="orbit-path" cx="150" cy="150" rx="115" ry="46" />
+                    <line class="orbit-connector" x1="75" y1="135" x2="225" y2="165" />
+                    <circle class="orbit-satellite sat-1" cx="75" cy="135" r="8" />
+                    <circle class="orbit-satellite sat-2" cx="225" cy="165" r="8" />
+                  </svg>
+                  <div class="orbit-core"><div class="orbit-core-pulse"></div></div>
+                </div>
+                <span class="work-chip">PRODUCT / 2026</span>
+                <span class="work-badge-word">ORBIT</span>
+              </div>
+              <div class="work-stage-meta">
+                <div class="work-meta-kicker">OPERATIONS / TELEMETRY COMMAND</div>
+                <h2 class="work-meta-title">Orbit Logistics</h2>
+                <p class="work-meta-desc">A calm operations command centre that turns noisy logistics data into decisions teams can act on. Dense information, zero latency, and tactile micro-interactions.</p>
+                <div class="work-meta-bottom">
+                  <div class="tag-row">
+                    <span>UX Strategy</span>
+                    <span>WebGL Telemetry</span>
+                    <span>Frontend</span>
+                  </div>
+                  <button class="button primary work-case-trigger" data-project="orbit" data-cursor="OPEN">Explore Full Case <span>↗</span></button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 02: NOVA SPACES -->
+          <article class="work-project-stage" data-index="1" data-project="nova" id="nova">
+            <div class="work-stage-card">
+              <div class="card-glare"></div>
+              <div class="work-stage-visual art-nova">
+                <div class="scene-nova" id="workNovaScene">
+                  <div class="nova-grid"></div>
+                  <div class="nova-sphere big"></div>
+                  <div class="nova-rings"></div>
+                  <div class="nova-coords"><span>LAT: 47.32°</span><span>LNG: -122.18°</span></div>
+                </div>
+                <span class="work-chip">3D / WEBGL</span>
+                <span class="work-badge-word">NOVA</span>
+              </div>
+              <div class="work-stage-meta">
+                <div class="work-meta-kicker">3D / WEBGL SPATIAL SHOWROOM</div>
+                <h2 class="work-meta-title">Nova Spaces</h2>
+                <p class="work-meta-desc">An editorial launch experience with a spatial navigation layer. Visitors explore the product through physical depth, daylight simulation, and ambient transitions.</p>
+                <div class="work-meta-bottom">
+                  <div class="tag-row">
+                    <span>Creative Dev</span>
+                    <span>Three.js</span>
+                    <span>Motion</span>
+                  </div>
+                  <button class="button primary work-case-trigger" data-project="nova" data-cursor="OPEN">Explore Full Case <span>↗</span></button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 03: LOOP INTELLIGENCE -->
+          <article class="work-project-stage" data-index="2" data-project="loop" id="loop">
+            <div class="work-stage-card">
+              <div class="card-glare"></div>
+              <div class="work-stage-visual art-loop">
+                <div class="scene-loop" id="workLoopScene">
+                  <canvas class="loop-wave-canvas" width="340" height="280"></canvas>
+                  <div class="loop-symbol big">∞</div>
+                  <div class="loop-nodes">
+                    <span class="l-node n1"></span><span class="l-node n2"></span><span class="l-node n3"></span>
+                  </div>
+                </div>
+                <span class="work-chip">AI / PLATFORM</span>
+                <span class="work-badge-word">LOOP</span>
+              </div>
+              <div class="work-stage-meta">
+                <div class="work-meta-kicker">AI / AUTONOMOUS WORKFLOWS</div>
+                <h2 class="work-meta-title">Loop Intelligence</h2>
+                <p class="work-meta-desc">A workflow layer that connects company knowledge, conversations, and repeatable actions. The interface makes every automated step visible, debuggable, and steerable.</p>
+                <div class="work-meta-bottom">
+                  <div class="tag-row">
+                    <span>AI UX</span>
+                    <span>Systems Design</span>
+                    <span>Automation</span>
+                  </div>
+                  <button class="button primary work-case-trigger" data-project="loop" data-cursor="OPEN">Explore Full Case <span>↗</span></button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Bottom HUD Controls & Progress Bar -->
+      <div class="work-gallery-bottom shell">
+        <div class="work-progress-track">
+          <div class="work-progress-bar" id="workProgressBar"></div>
+        </div>
+        <div class="work-quick-pills">
+          <button class="work-pill active" data-index="0" data-cursor="ORBIT">01 / ORBIT</button>
+          <button class="work-pill" data-index="1" data-cursor="NOVA">02 / NOVA SPACES</button>
+          <button class="work-pill" data-index="2" data-cursor="LOOP">03 / LOOP INTELLIGENCE</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shell final-cta">
+    <div class="cta-panel reveal">
+      <div class="section-kicker">02 / YOUR TURN</div>
+      <h2>Let's make your next <span class="gradient-text">case study.</span></h2>
+      <a class="button primary" href="contact.html" data-cursor="LET'S TALK" data-magnetic="true">Start a conversation <span>↗</span></a>
+    </div>
+  </section>
+</main>
+
+<!-- Fullscreen Project Showcase Transition Modal -->
+<div id="projectModal" class="project-modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="project-modal-backdrop" id="modalBackdrop"></div>
+  <div class="project-modal-sheet" id="modalSheet">
+    <button class="project-modal-close" id="modalClose" aria-label="Close project showcase" data-cursor="CLOSE">✕</button>
+    <div class="project-modal-scroll">
+      <div class="project-modal-hero" id="modalHero">
+        <div class="modal-hero-art" id="modalHeroArt"></div>
+        <div class="modal-hero-overlay">
+          <div class="modal-chip" id="modalChip">PRODUCT / 2026</div>
+          <h1 class="modal-title" id="modalTitle">Orbit Logistics</h1>
+          <p class="modal-subtitle" id="modalSubtitle">Global freight intelligence and real-time fleet coordination platform.</p>
+        </div>
+      </div>
+      
+      <div class="project-modal-body shell">
+        <div class="modal-grid">
+          <div class="modal-main">
+            <div class="modal-section">
+              <span class="section-kicker">THE CHALLENGE</span>
+              <p id="modalChallenge">Logistics teams navigate dozens of siloed monitoring screens, resulting in slow reaction times and cognitive fatigue during high-volume operations.</p>
+            </div>
+            
+            <div class="modal-section">
+              <span class="section-kicker">THE SOLUTION</span>
+              <p id="modalSolution">We engineered a tactile, unified command center with spatial telemetry maps, dynamic routing simulations, and predictive alerting.</p>
+            </div>
+
+            <div class="modal-section">
+              <span class="section-kicker">INTERACTIVE SYSTEM SIMULATION</span>
+              <div class="modal-interactive-box" id="modalInteractiveBox">
+                <!-- Dynamic Interactive Demo Area -->
+              </div>
+            </div>
+          </div>
+          
+          <aside class="modal-sidebar">
+            <div class="modal-sidebar-card">
+              <span class="section-kicker">DELIVERABLES</span>
+              <ul class="modal-list" id="modalDeliverables">
+                <li>UX Strategy & Design System</li>
+                <li>WebGL Interactive Telemetry</li>
+                <li>Fullstack Production Deployment</li>
+              </ul>
+            </div>
+            
+            <div class="modal-sidebar-card">
+              <span class="section-kicker">KEY METRICS</span>
+              <div class="modal-stats" id="modalStats">
+                <div class="stat-item"><span class="stat-num">+140%</span><span class="stat-lbl">Dispatch Speed</span></div>
+                <div class="stat-item"><span class="stat-num">45ms</span><span class="stat-lbl">Sync Latency</span></div>
+                <div class="stat-item"><span class="stat-num">99.98%</span><span class="stat-lbl">Accuracy</span></div>
+              </div>
+            </div>
+
+            <div class="modal-sidebar-card">
+              <span class="section-kicker">TECHNOLOGY STACK</span>
+              <div class="tag-row modal-tags" id="modalTech">
+                <span>Three.js</span>
+                <span>WebGL</span>
+                <span>TypeScript</span>
+                <span>Tailored CSS</span>
+              </div>
+            </div>
+
+            <div class="modal-sidebar-actions">
+              <a href="contact.html" class="button primary w-100" data-cursor="START">Start Similar Project ↗</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer shell">
+  <div class="footer-brand">
+    <img src="assets/devlooopers-logo-d.png" alt="devlooopers" class="footer-logo-icon">
+    <span>© 2026 devlooopers</span>
+  </div>
+  <div>Design × Code × Curiosity</div>
+  <div><a href="contact.html" data-cursor="CONTACT">Contact</a></div>
+</footer>
+
+<script src="assets/bootstrap.bundle.min.js"></script>
+<script src="assets/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

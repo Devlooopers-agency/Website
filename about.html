@@ -1,6 +1,151 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="About devlooopers — a digital studio focused on design, technology and curiosity."><title>Studio — devlooopers</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head>
-<body data-page="about"><div class="noise"></div><div class="page-wipe"></div><header class="site-header"><a class="brand" href="index.html"><span class="brand-mark"><span></span></span><span class="brand-text">devlooopers</span></a><button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button><nav class="nav"><a href="index.html">Home</a><a href="work.html">Work</a><a href="services.html">Services</a><a class="active" href="about.html">Studio</a><a class="nav-cta" href="contact.html">Start a project <span>↗</span></a></nav></header>
-<main><section class="page-hero shell"><div class="section-kicker reveal">03 / THE STUDIO</div><h1 class="display reveal delay-1">Curious by default.<br><span class="gradient-text">Specific by choice.</span></h1><p class="hero-lead narrow reveal delay-2">devlooopers is a small, multidisciplinary studio for ambitious digital work. We like clarity, movement and ideas that earn their complexity.</p></section>
-<section class="section shell studio-grid"><div class="studio-quote reveal"><span class="quote-mark">“</span><p>Technology should not sit behind the experience. It should be part of the experience.</p></div><div class="studio-copy reveal delay-1"><p>We work across strategy, brand, interface, frontend engineering and AI. That range lets us move from a blank page to a living product without losing the thread.</p><p>Our favourite projects are the ones where a team has something real to change: a process to simplify, a new category to define, or a product that deserves a better front door.</p></div></section>
-<section class="section shell values"><div class="section-kicker reveal">04 / VALUES</div><div class="value-list"><div class="value reveal"><span>01</span><h3>Useful first</h3><p>Style earns its place by helping the user move.</p></div><div class="value reveal delay-1"><span>02</span><h3>Play with purpose</h3><p>Interaction is not decoration when it teaches, guides or rewards curiosity.</p></div><div class="value reveal delay-2"><span>03</span><h3>Make it tangible</h3><p>Prototype the real thing early. Opinions get sharper when the work can be touched.</p></div></div></section>
-<section class="section shell final-cta"><div class="cta-panel reveal"><div class="section-kicker">05 / CONTACT</div><h2>Good work starts with a <span class="gradient-text">good question.</span></h2><a class="button primary" href="contact.html">Ask yours <span>↗</span></a></div></section></main><footer class="site-footer shell"><div>© 2026 devlooopers</div><div>Design × Code × Curiosity</div><div><a href="contact.html">Contact</a></div></footer><script src="script.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="About devlooopers — a digital studio focused on design, technology and curiosity.">
+  <title>Studio — devlooopers</title>
+  <link rel="icon" type="image/png" href="assets/devlooopers-logo-d.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="about">
+<div class="noise"></div>
+
+<!-- Custom Interactive Magnetic Cursor (Desktop) -->
+<div class="custom-cursor" id="customCursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring">
+    <span class="cursor-icon"></span>
+    <span class="cursor-label"></span>
+  </div>
+</div>
+
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="devlooopers home" data-cursor="HOME">
+    <img src="assets/devlooopers-logo-d.png" alt="devlooopers icon" class="brand-logo-icon">
+    <img src="assets/devlooopers-logo.png" alt="devlooopers" class="brand-logo-text">
+  </a>
+  <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+  <nav class="nav">
+    <a href="index.html" data-cursor="HOME">Home</a>
+    <a href="work.html" data-cursor="WORK">Work</a>
+    <a href="services.html" data-cursor="SERVICES">Services</a>
+    <a class="active" href="about.html" data-cursor="STUDIO">Studio</a>
+    <a class="nav-cta" href="contact.html" data-cursor="START">Start a project <span>↗</span></a>
+  </nav>
+</header>
+
+<main>
+  <section class="page-hero shell">
+    <div class="section-kicker reveal">03 / THE STUDIO</div>
+    <h1 class="display reveal delay-1">Curious by default.<br><span class="gradient-text">Specific by choice.</span></h1>
+    <p class="hero-lead narrow reveal delay-2">devlooopers is a small, multidisciplinary studio for ambitious digital work. We like clarity, movement and ideas that earn their complexity.</p>
+  </section>
+
+  <section class="section shell studio-grid">
+    <div class="studio-quote reveal">
+      <span class="quote-mark">“</span>
+      <p>Technology should not sit behind the experience. It should be part of the experience.</p>
+    </div>
+    <div class="studio-copy reveal delay-1">
+      <p>We work across strategy, brand, interface, frontend engineering and AI. That range lets us move from a blank page to a living product without losing the thread.</p>
+      <p>Our favourite projects are the ones where a team has something real to change: a process to simplify, a new category to define, or a product that deserves a better front door.</p>
+    </div>
+  </section>
+
+  <section class="section shell values">
+    <div class="section-kicker reveal">04 / VALUES</div>
+    <div class="value-list">
+      <div class="value reveal" data-cursor="VALUE">
+        <span>01</span>
+        <h3>Useful first</h3>
+        <p>Style earns its place by helping the user move.</p>
+      </div>
+      <div class="value reveal delay-1" data-cursor="VALUE">
+        <span>02</span>
+        <h3>Play with purpose</h3>
+        <p>Interaction is not decoration when it teaches, guides or rewards curiosity.</p>
+      </div>
+      <div class="value reveal delay-2" data-cursor="VALUE">
+        <span>03</span>
+        <h3>Make it tangible</h3>
+        <p>Prototype the real thing early. Opinions get sharper when the work can be touched.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Studio Manifesto Kinetic Typographic Section -->
+  <section class="kinetic-statement-section" id="studioKineticSection">
+    <div class="kinetic-sticky-stage">
+      <div class="kinetic-bg-grid"></div>
+      <div class="kinetic-glow"></div>
+      
+      <div class="kinetic-inner shell">
+        <div class="kinetic-meta-top">
+          <span class="kinetic-kicker">04 / THE FORMULA</span>
+          <span class="kinetic-coords">PRECISION × COMPUTATION × SOUL</span>
+        </div>
+        
+        <div class="kinetic-type-box">
+          <!-- Line 1: BRINGING YOUR (Compresses) -->
+          <div class="kinetic-line kinetic-line-compress">
+            <span class="k-word">BRINGING</span>
+            <span class="k-word">YOUR</span>
+          </div>
+          
+          <!-- Line 2: DIGITAL VISION (Expands across screen) -->
+          <div class="kinetic-line kinetic-line-expand">
+            <span class="k-word gradient-text">DIGITAL VISION</span>
+          </div>
+          
+          <!-- Line 3: TO LIFE (Moves horizontally) -->
+          <div class="kinetic-line kinetic-line-drift line-experiences">
+            <div class="experiences-track kinetic-drift-track">
+              <span class="k-word">TO LIFE</span>
+              <span class="k-spark">✦</span>
+              <span class="k-word word-sub">DEVLOOOPERS</span>
+              <span class="k-spark">✦</span>
+              <span class="k-word word-repeat">TO LIFE</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="kinetic-meta-bottom">
+          <div class="kinetic-meter">
+            <span class="meter-text">STUDIO MANIFESTO</span>
+            <div class="meter-track">
+              <div class="meter-bar kinetic-meter-bar"></div>
+            </div>
+          </div>
+          <span class="kinetic-tagline">“Bringing your digital vision to life.”</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shell final-cta">
+    <div class="cta-panel reveal">
+      <div class="section-kicker">05 / CONTACT</div>
+      <h2>Good work starts with a <span class="gradient-text">good question.</span></h2>
+      <a class="button primary" href="contact.html" data-cursor="LET'S TALK" data-magnetic="true">Ask yours <span>↗</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-brand">
+    <img src="assets/devlooopers-logo-d.png" alt="devlooopers" class="footer-logo-icon">
+    <span>© 2026 devlooopers</span>
+  </div>
+  <div>Design × Code × Curiosity</div>
+  <div><a href="contact.html" data-cursor="CONTACT">Contact</a></div>
+</footer>
+
+<script src="assets/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

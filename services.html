@@ -1,6 +1,459 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="devlooopers services: product design, engineering, creative technology and AI."><title>Services — devlooopers</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head>
-<body data-page="services"><div class="noise"></div><div class="page-wipe"></div><header class="site-header"><a class="brand" href="index.html"><span class="brand-mark"><span></span></span><span class="brand-text">devlooopers</span></a><button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button><nav class="nav"><a href="index.html">Home</a><a href="work.html">Work</a><a class="active" href="services.html">Services</a><a href="about.html">Studio</a><a class="nav-cta" href="contact.html">Start a project <span>↗</span></a></nav></header>
-<main><section class="page-hero shell"><div class="section-kicker reveal">02 / CAPABILITIES</div><h1 class="display reveal delay-1">One studio. <span class="gradient-text">Many levers.</span></h1><p class="hero-lead narrow reveal delay-2">We combine disciplines instead of handing the hard parts between separate teams.</p></section>
-<section class="section shell services-grid"><article class="service-panel reveal"><span>01</span><h2>Product<br>Design</h2><p>Research, information architecture, UX, UI and design systems that make complex products feel clear.</p><a href="contact.html">Build a product <span>→</span></a></article><article class="service-panel reveal delay-1"><span>02</span><h2>Creative<br>Technology</h2><p>Interactive landing pages, 3D scenes, WebGL experiments, motion and expressive frontend systems.</p><a href="contact.html">Add a layer of magic <span>→</span></a></article><article class="service-panel reveal delay-2"><span>03</span><h2>Engineering<br>& Systems</h2><p>Modern frontend builds, APIs, dashboards and scalable application architecture with performance in mind.</p><a href="contact.html">Ship the thing <span>→</span></a></article><article class="service-panel reveal"><span>04</span><h2>AI &<br>Automation</h2><p>Assistants, knowledge systems, classification workflows and automations designed around measurable value.</p><a href="contact.html">Make work smarter <span>→</span></a></article></section>
-<section class="section shell process"><div class="section-kicker reveal">03 / PROCESS</div><h2 class="section-title reveal">From first question to <span class="gradient-text">first click.</span></h2><div class="process-line"><div class="process-step reveal"><span>01</span><h3>Frame</h3><p>What are we solving, for whom, and why now?</p></div><div class="process-step reveal delay-1"><span>02</span><h3>Explore</h3><p>We sketch routes, interactions and the simplest useful system.</p></div><div class="process-step reveal delay-2"><span>03</span><h3>Build</h3><p>Design and engineering happen together, in short loops.</p></div><div class="process-step reveal delay-3"><span>04</span><h3>Refine</h3><p>We test the experience until it feels inevitable.</p></div></div></section>
-<section class="section shell final-cta"><div class="cta-panel reveal"><div class="section-kicker">04 / READY?</div><h2>Bring us the <span class="gradient-text">interesting</span> problem.</h2><a class="button primary" href="contact.html">Let's talk <span>↗</span></a></div></section></main><footer class="site-footer shell"><div>© 2026 devlooopers</div><div>Design × Code × Curiosity</div><div><a href="contact.html">Contact</a></div></footer><script src="script.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="devlooopers services: product design, engineering, creative technology and AI.">
+  <title>Services — devlooopers</title>
+  <link rel="icon" type="image/png" href="assets/devlooopers-logo-d.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="services">
+<div class="noise"></div>
+
+<!-- Custom Interactive Magnetic Cursor (Desktop) -->
+<div class="custom-cursor" id="customCursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring">
+    <span class="cursor-icon"></span>
+    <span class="cursor-label"></span>
+  </div>
+</div>
+
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="devlooopers home" data-cursor="HOME">
+    <img src="assets/devlooopers-logo-d.png" alt="devlooopers icon" class="brand-logo-icon">
+    <img src="assets/devlooopers-logo.png" alt="devlooopers" class="brand-logo-text">
+  </a>
+  <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+  <nav class="nav">
+    <a href="index.html" data-cursor="HOME">Home</a>
+    <a href="work.html" data-cursor="WORK">Work</a>
+    <a class="active" href="services.html" data-cursor="SERVICES">Services</a>
+    <a href="about.html" data-cursor="STUDIO">Studio</a>
+    <a class="nav-cta" href="contact.html" data-cursor="START">Start a project <span>↗</span></a>
+  </nav>
+</header>
+
+<main>
+  <section class="page-hero shell">
+    <div class="section-kicker reveal">02 / CAPABILITIES</div>
+    <h1 class="display reveal delay-1">One studio. <span class="gradient-text">Many levers.</span></h1>
+    <p class="hero-lead narrow reveal delay-2">We combine disciplines instead of handing the hard parts between separate teams.</p>
+  </section>
+
+  <!-- Expandable Interactive Services Section -->
+  <section class="section shell services-interactive-section">
+    <div class="services-grid-interactive">
+      
+      <!-- 01 / PRODUCT DESIGN -->
+      <article class="service-card-interactive reveal" data-service="design" data-cursor="EXPAND">
+        <div class="service-card-header">
+          <span class="service-num">01</span>
+          <button class="service-expand-btn" aria-label="Expand Product Design service" data-cursor="EXPAND">
+            <span class="btn-icon-plus">+</span>
+            <span class="btn-icon-arrow">→</span>
+          </button>
+        </div>
+        <h2 class="service-title">Product<br>Design</h2>
+        <p class="service-summary">Research, information architecture, UX, UI, and design systems that make complex products feel clear and effortless.</p>
+        
+        <!-- Hover Capabilities Preview -->
+        <div class="service-hover-tags">
+          <span>UX Strategy</span>
+          <span>Design Systems</span>
+          <span>Prototypes</span>
+          <span>Info Architecture</span>
+        </div>
+
+        <!-- Expanded Full Capability Drawer -->
+        <div class="service-expanded-drawer">
+          <div class="service-drawer-content">
+            <div class="service-drawer-divider"></div>
+            <div class="service-deliverables-wrap">
+              <span class="service-subhead">CORE DELIVERABLES</span>
+              <ul class="service-deliverables-list">
+                <li>User Research & Mental Models</li>
+                <li>Design Systems & Component Libraries</li>
+                <li>High-Fidelity Interactive Prototypes</li>
+                <li>Tactile Micro-Interactions & UI States</li>
+                <li>Design Audit & Usability Validation</li>
+              </ul>
+            </div>
+            <div class="service-drawer-action">
+              <a href="contact.html" class="button primary" data-cursor="START">Start a product <span>↗</span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 / CREATIVE TECHNOLOGY -->
+      <article class="service-card-interactive reveal delay-1" data-service="creative" data-cursor="EXPAND">
+        <div class="service-card-header">
+          <span class="service-num">02</span>
+          <button class="service-expand-btn" aria-label="Expand Creative Technology service" data-cursor="EXPAND">
+            <span class="btn-icon-plus">+</span>
+            <span class="btn-icon-arrow">→</span>
+          </button>
+        </div>
+        <h2 class="service-title">Creative<br>Technology</h2>
+        <p class="service-summary">Interactive landing pages, 3D WebGL scenes, shader experiments, motion choreography, and expressive frontend systems.</p>
+        
+        <!-- Hover Capabilities Preview -->
+        <div class="service-hover-tags">
+          <span>WebGL</span>
+          <span>Three.js</span>
+          <span>Motion</span>
+          <span>Interactive UI</span>
+        </div>
+
+        <!-- Expanded Full Capability Drawer -->
+        <div class="service-expanded-drawer">
+          <div class="service-drawer-content">
+            <div class="service-drawer-divider"></div>
+            <div class="service-deliverables-wrap">
+              <span class="service-subhead">CORE DELIVERABLES</span>
+              <ul class="service-deliverables-list">
+                <li>3D WebGL Experiences & Custom Shaders</li>
+                <li>Spatial Interactive Product Showrooms</li>
+                <li>Scroll-Driven Motion & Fluid Transitions</li>
+                <li>HTML5 Canvas Generative Graphics</li>
+                <li>60fps Micro-Animations & Sound Design</li>
+              </ul>
+            </div>
+            <div class="service-drawer-action">
+              <a href="contact.html" class="button primary" data-cursor="START">Add a layer of magic <span>↗</span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 / ENGINEERING & SYSTEMS -->
+      <article class="service-card-interactive reveal delay-2" data-service="engineering" data-cursor="EXPAND">
+        <div class="service-card-header">
+          <span class="service-num">03</span>
+          <button class="service-expand-btn" aria-label="Expand Engineering & Systems service" data-cursor="EXPAND">
+            <span class="btn-icon-plus">+</span>
+            <span class="btn-icon-arrow">→</span>
+          </button>
+        </div>
+        <h2 class="service-title">Engineering<br>& Systems</h2>
+        <p class="service-summary">Modern frontend builds, high-throughput APIs, scalable application architectures, and robust cloud infrastructure.</p>
+        
+        <!-- Hover Capabilities Preview -->
+        <div class="service-hover-tags">
+          <span>Fullstack</span>
+          <span>APIs</span>
+          <span>Cloud Infra</span>
+          <span>Performance</span>
+        </div>
+
+        <!-- Expanded Full Capability Drawer -->
+        <div class="service-expanded-drawer">
+          <div class="service-drawer-content">
+            <div class="service-drawer-divider"></div>
+            <div class="service-deliverables-wrap">
+              <span class="service-subhead">CORE DELIVERABLES</span>
+              <ul class="service-deliverables-list">
+                <li>High-Performance React/Next.js/Vite Apps</li>
+                <li>REST & GraphQL Scalable Backend APIs</li>
+                <li>Real-Time WebSockets & Telemetry Pipelines</li>
+                <li>Cloud Deployment, CI/CD & Edge Caching</li>
+                <li>Rigorous Performance, SEO & Security Audits</li>
+              </ul>
+            </div>
+            <div class="service-drawer-action">
+              <a href="contact.html" class="button primary" data-cursor="START">Ship the thing <span>↗</span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04 / AI & AUTOMATION -->
+      <article class="service-card-interactive reveal delay-3" data-service="ai" data-cursor="EXPAND">
+        <div class="service-card-header">
+          <span class="service-num">04</span>
+          <button class="service-expand-btn" aria-label="Expand AI & Automation service" data-cursor="EXPAND">
+            <span class="btn-icon-plus">+</span>
+            <span class="btn-icon-arrow">→</span>
+          </button>
+        </div>
+        <h2 class="service-title">AI &<br>Automation</h2>
+        <p class="service-summary">Autonomous agent workflows, RAG knowledge systems, smart classification pipelines, and enterprise process automation.</p>
+        
+        <!-- Hover Capabilities Preview -->
+        <div class="service-hover-tags">
+          <span>Agent Workflows</span>
+          <span>RAG Systems</span>
+          <span>LLM Pipelines</span>
+          <span>Automation</span>
+        </div>
+
+        <!-- Expanded Full Capability Drawer -->
+        <div class="service-expanded-drawer">
+          <div class="service-drawer-content">
+            <div class="service-drawer-divider"></div>
+            <div class="service-deliverables-wrap">
+              <span class="service-subhead">CORE DELIVERABLES</span>
+              <ul class="service-deliverables-list">
+                <li>Multi-Agent Orchestration & Workflow Engines</li>
+                <li>Semantic Search & Vector RAG Architectures</li>
+                <li>Custom LLM Tool Integration & Fine-Tuning</li>
+                <li>Automated Operational Tasks & Safety Triggers</li>
+                <li>Steerable Human-in-the-Loop Interfaces</li>
+              </ul>
+            </div>
+            <div class="service-drawer-action">
+              <a href="contact.html" class="button primary" data-cursor="START">Make work smarter <span>↗</span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Horizontal Animated Process Journey Section -->
+  <section class="process-journey-section" id="processJourneySection">
+    <div class="process-sticky-wrapper" id="processStickyWrapper">
+      <div class="process-inner shell">
+        
+        <!-- Process Header -->
+        <div class="process-journey-head">
+          <div class="section-kicker reveal">03 / PROCESS</div>
+          <h2 class="section-title reveal">From first question to <span class="gradient-text">first click.</span></h2>
+        </div>
+
+        <!-- Interactive Process Timeline Bar -->
+        <div class="process-timeline-bar-wrap">
+          <div class="process-timeline-track">
+            <div class="process-timeline-fill" id="processTimelineFill"></div>
+            <div class="process-timeline-dot" id="processTimelineDot"></div>
+          </div>
+          <div class="process-timeline-markers">
+            <button class="process-marker-btn active" data-step="0" data-cursor="DISCOVER">
+              <span class="marker-idx">01</span>
+              <span class="marker-title">DISCOVER</span>
+            </button>
+            <button class="process-marker-btn" data-step="1" data-cursor="DESIGN">
+              <span class="marker-idx">02</span>
+              <span class="marker-title">DESIGN</span>
+            </button>
+            <button class="process-marker-btn" data-step="2" data-cursor="BUILD">
+              <span class="marker-idx">03</span>
+              <span class="marker-title">BUILD</span>
+            </button>
+            <button class="process-marker-btn" data-step="3" data-cursor="LAUNCH">
+              <span class="marker-idx">04</span>
+              <span class="marker-title">LAUNCH</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Horizontal Sliding Process Stage Viewport -->
+        <div class="process-carousel-viewport" id="processCarouselViewport">
+          <div class="process-carousel-track" id="processCarouselTrack">
+            
+            <!-- STEP 01: DISCOVER -->
+            <div class="process-step-slide active" data-step="0">
+              <div class="process-stage-container">
+                <div class="process-stage-grid">
+                  <div class="process-copy-wrap">
+                    <span class="process-step-pill">01 / FRAMEWORK</span>
+                    <h3 class="process-headline">We map the problem before writing a line of code.</h3>
+                    <p class="process-desc">Deep-dive stakeholder inquiry, system requirements audits, and user mental model mapping to define clear technical boundaries and measurable goals.</p>
+                    <div class="process-points">
+                      <span class="point-badge">Problem Definition</span>
+                      <span class="point-badge">Architecture Blueprint</span>
+                      <span class="point-badge">Scope Calibration</span>
+                    </div>
+                  </div>
+                  <div class="process-visual-wrap">
+                    <div class="process-dynamic-visual stage-0">
+                      <div class="radar-scan">
+                        <div class="radar-circle rc-1"></div>
+                        <div class="radar-circle rc-2"></div>
+                        <div class="radar-circle rc-3"></div>
+                        <div class="radar-beam"></div>
+                        <div class="radar-dot rd-1"></div>
+                        <div class="radar-dot rd-2"></div>
+                        <div class="radar-dot rd-3"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 02: DESIGN -->
+            <div class="process-step-slide" data-step="1">
+              <div class="process-stage-container">
+                <div class="process-stage-grid">
+                  <div class="process-copy-wrap">
+                    <span class="process-step-pill">02 / ARCHITECTURE</span>
+                    <h3 class="process-headline">High-fidelity spatial design and system blueprints.</h3>
+                    <p class="process-desc">Translating strategic insights into bespoke UI architecture, motion choreography, responsive design tokens, and tactile interactive prototypes.</p>
+                    <div class="process-points">
+                      <span class="point-badge">Spatial Layouts</span>
+                      <span class="point-badge">Motion Systems</span>
+                      <span class="point-badge">Component Libraries</span>
+                    </div>
+                  </div>
+                  <div class="process-visual-wrap">
+                    <div class="process-dynamic-visual stage-1">
+                      <div class="wireframe-design-visual">
+                        <div class="blueprint-grid"></div>
+                        <div class="blueprint-shapes">
+                          <div class="bp-cube"></div>
+                          <div class="bp-inner-circle"></div>
+                          <div class="bp-handle bp-h1"></div>
+                          <div class="bp-handle bp-h2"></div>
+                          <div class="bp-handle bp-h3"></div>
+                          <div class="bp-handle bp-h4"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 03: BUILD -->
+            <div class="process-step-slide" data-step="2">
+              <div class="process-stage-container">
+                <div class="process-stage-grid">
+                  <div class="process-copy-wrap">
+                    <span class="process-step-pill">03 / PRODUCTION</span>
+                    <h3 class="process-headline">Production-grade engineering, WebGL, and scalable code.</h3>
+                    <p class="process-desc">Pixel-perfect frontend realization, Three.js shaders, low-latency micro-interactions, robust backend APIs, and continuous integration pipelines.</p>
+                    <div class="process-points">
+                      <span class="point-badge">WebGL / Three.js</span>
+                      <span class="point-badge">60fps Micro-Animations</span>
+                      <span class="point-badge">Scalable APIs</span>
+                    </div>
+                  </div>
+                  <div class="process-visual-wrap">
+                    <div class="process-dynamic-visual stage-2">
+                      <div class="code-matrix-visual">
+                        <div class="matrix-line"><span class="m-kw">import</span> <span class="m-fn">{ Engine, Shaders }</span> <span class="m-kw">from</span> <span class="m-str">'@devlooopers/core'</span>;</div>
+                        <div class="matrix-line"><span class="m-com">// Initialize spatial graphics pipeline</span></div>
+                        <div class="matrix-line"><span class="m-kw">const</span> <span class="m-fn">renderer</span> = <span class="m-kw">new</span> <span class="m-fn">WebGLRenderer</span>({ <span class="m-str">antialias</span>: <span class="m-num">true</span> });</div>
+                        <div class="matrix-line"><span class="m-fn">renderer</span>.<span class="m-fn">compileShaders</span>(<span class="m-str">'fluid-flow'</span>);</div>
+                        <div class="matrix-line"><span class="m-fn">stream</span>.<span class="m-fn">pipelineReady</span>() <span class="matrix-cursor-pulse"></span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 04: LAUNCH -->
+            <div class="process-step-slide" data-step="3">
+              <div class="process-stage-container">
+                <div class="process-stage-grid">
+                  <div class="process-copy-wrap">
+                    <span class="process-step-pill">04 / DEPLOYMENT</span>
+                    <h3 class="process-headline">Global edge deployment, telemetry, and continual evolution.</h3>
+                    <p class="process-desc">Multi-region CDN deployment, performance benchmarking, real-time analytics instrumentation, and ongoing capability scaling.</p>
+                    <div class="process-points">
+                      <span class="point-badge">Zero-Downtime Launch</span>
+                      <span class="point-badge">Sub-100ms Edge Latency</span>
+                      <span class="point-badge">Telemetry Observability</span>
+                    </div>
+                  </div>
+                  <div class="process-visual-wrap">
+                    <div class="process-dynamic-visual stage-3">
+                      <div class="launch-orbit-visual">
+                        <div class="launch-orbital-ring lor-1"><div class="launch-satellite"></div></div>
+                        <div class="launch-orbital-ring lor-2"><div class="launch-satellite"></div></div>
+                        <div class="launch-orbital-ring lor-3"><div class="launch-satellite"></div></div>
+                        <div class="launch-core-beacon"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities Scale Kinetic Typographic Section -->
+  <section class="kinetic-statement-section" id="servicesKineticSection">
+    <div class="kinetic-sticky-stage">
+      <div class="kinetic-bg-grid"></div>
+      <div class="kinetic-glow"></div>
+      
+      <div class="kinetic-inner shell">
+        <div class="kinetic-meta-top">
+          <span class="kinetic-kicker">04 / ARCHITECTURE</span>
+          <span class="kinetic-coords">FULLSTACK × WEBGL × MULTI-AGENT</span>
+        </div>
+        
+        <div class="kinetic-type-box">
+          <!-- Line 1: DESIGN TO (Compresses) -->
+          <div class="kinetic-line kinetic-line-compress">
+            <span class="k-word">DESIGN</span>
+            <span class="k-word">TO</span>
+          </div>
+          
+          <!-- Line 2: SCALE (Expands across screen) -->
+          <div class="kinetic-line kinetic-line-expand">
+            <span class="k-word gradient-text">SCALE</span>
+          </div>
+          
+          <!-- Line 3: GLOBAL DEPLOYMENT (Moves horizontally) -->
+          <div class="kinetic-line kinetic-line-drift line-experiences">
+            <div class="experiences-track kinetic-drift-track">
+              <span class="k-word">DEPLOYMENT</span>
+              <span class="k-spark">✦</span>
+              <span class="k-word word-sub">SUB-100MS LATENCY</span>
+              <span class="k-spark">✦</span>
+              <span class="k-word word-repeat">DEPLOYMENT</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="kinetic-meta-bottom">
+          <div class="kinetic-meter">
+            <span class="meter-text">COMPUTATIONAL DEPTH</span>
+            <div class="meter-track">
+              <div class="meter-bar kinetic-meter-bar"></div>
+            </div>
+          </div>
+          <span class="kinetic-tagline">“We combine disciplines into one tight loop.”</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shell final-cta">
+    <div class="cta-panel reveal">
+      <div class="section-kicker">05 / READY?</div>
+      <h2>Bring us the <span class="gradient-text">interesting</span> problem.</h2>
+      <a class="button primary" href="contact.html" data-cursor="LET'S TALK" data-magnetic="true">Let's talk <span>↗</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer shell">
+  <div class="footer-brand">
+    <img src="assets/devlooopers-logo-d.png" alt="devlooopers" class="footer-logo-icon">
+    <span>© 2026 devlooopers</span>
+  </div>
+  <div>Design × Code × Curiosity</div>
+  <div><a href="contact.html" data-cursor="CONTACT">Contact</a></div>
+</footer>
+
+<script src="assets/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
