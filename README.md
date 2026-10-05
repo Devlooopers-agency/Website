@@ -1,4 +1,4 @@
-# devlooopers interactive website
+# devlooopers website
 
 A responsive, light-theme multi-page website concept for devlooopers.
 
