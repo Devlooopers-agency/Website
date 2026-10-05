@@ -1,0 +1,56 @@
+/* ============================================================
+   DEVLOOOPERS — THEME TRANSITION LAYER STYLES (ThemeTransition.css)
+   Architectural SVG Clip-Path Wipe Engine
+   ============================================================ */
+
+.theme-transition-viewport-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1; /* Layered underneath interactive content */
+  overflow: hidden;
+  will-change: transform;
+}
+
+.theme-transition-mask-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-color: var(--incoming-theme-bg, #080a0f);
+  color: var(--incoming-theme-text, #ffffff);
+  transition: opacity 0.15s ease-out;
+  will-change: clip-path, transform;
+}
+
+.theme-transition-edge-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  pointer-events: none;
+  z-index: 3;
+  background: var(--primary-gradient);
+  box-shadow: 0 0 24px rgba(48, 161, 191, 0.6), 0 0 48px rgba(83, 80, 215, 0.4);
+  filter: blur(1px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.theme-transition-viewport-overlay.is-active .theme-transition-edge-line {
+  opacity: 0.85;
+}
+
+/* Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition-mask-layer,
+  .theme-transition-edge-line {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+}

@@ -1,0 +1,73 @@
+/* ============================================================
+   DEVLOOOPERS — CENTRAL THEME DESIGN SYSTEM (styles/theme.css)
+   One Authoritative Light ↔ Dark Theme Token Infrastructure
+   ============================================================ */
+
+:root {
+  /* Core Brand Tokens */
+  --obsidian-base: #080a0f;
+  --obsidian-surface: #10131b;
+  --obsidian-surface-elevated: #161a26;
+  --studio-white: #ffffff;
+  --studio-soft: #f5f7fb;
+  --studio-line: #e7ebf2;
+  --studio-text-muted: #69717e;
+  --accent-indigo: #5350d7;
+  --accent-blue: #377cd6;
+  --accent-cyan: #30a1bf;
+  --accent-green: #39cf72;
+
+  --primary-gradient: linear-gradient(135deg, #5350d7 0%, #377cd6 38%, #30a1bf 70%, #39cf72 100%);
+}
+
+/* Light Theme Variables (Default) */
+:root,
+[data-theme="light"] {
+  --theme-bg: #ffffff;
+  --theme-surface: #f5f7fb;
+  --theme-surface-elevated: #ffffff;
+  --theme-text: #080a0f;
+  --theme-text-secondary: #69717e;
+  --theme-border: #e7ebf2;
+  --theme-border-strong: #d0d7e2;
+  --theme-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  --theme-glow: rgba(83, 80, 215, 0.12);
+  --theme-line: #e7ebf2;
+  --theme-button-bg: #080a0f;
+  --theme-button-text: #ffffff;
+  --theme-card-hover-border: rgba(83, 80, 215, 0.35);
+  --theme-navbar-bg: rgba(255, 255, 255, 0.85);
+  --theme-navbar-border: rgba(0, 0, 0, 0.08);
+  --theme-cursor-ring: rgba(8, 10, 15, 0.4);
+  --theme-cursor-dot: #080a0f;
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+  --theme-bg: #080a0f;
+  --theme-surface: #10131b;
+  --theme-surface-elevated: #161a26;
+  --theme-text: #ffffff;
+  --theme-text-secondary: #9ba3b2;
+  --theme-border: rgba(255, 255, 255, 0.08);
+  --theme-border-strong: rgba(255, 255, 255, 0.16);
+  --theme-shadow: 0 16px 50px rgba(0, 0, 0, 0.4);
+  --theme-glow: rgba(48, 161, 191, 0.25);
+  --theme-line: rgba(255, 255, 255, 0.14);
+  --theme-button-bg: #ffffff;
+  --theme-button-text: #080a0f;
+  --theme-card-hover-border: rgba(48, 161, 191, 0.45);
+  --theme-navbar-bg: rgba(8, 10, 15, 0.82);
+  --theme-navbar-border: rgba(255, 255, 255, 0.1);
+  --theme-cursor-ring: rgba(255, 255, 255, 0.45);
+  --theme-cursor-dot: #ffffff;
+}
+
+/* Smooth color transitions for theme-aware elements */
+body,
+.app-container,
+[data-theme-aware="true"] {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+}

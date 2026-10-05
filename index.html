@@ -2,499 +2,82 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="devlooopers — interactive digital products, 3D web experiences and intelligent systems.">
-  <title>devlooopers — Digital experiences that move</title>
-  <link rel="icon" type="image/png" href="assets/devlooopers-logo-d.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080a0f">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>Devlooopers — Full-Stack Web Development, Meta Ads & Digital Marketing Agency</title>
+  <meta name="title" content="Devlooopers — Full-Stack Web Development, Meta Ads & Digital Marketing Agency">
+  <meta name="description" content="Devlooopers is a premier digital growth agency specializing in high-converting custom React/Next.js web development, high-ROAS Meta (Facebook & Instagram) ads, and data-driven SEO growth.">
+  <meta name="keywords" content="Web Development Agency, Meta Ads Agency, Facebook Ads Agency, Instagram Marketing, Digital Marketing Agency, Full-Stack Developers, React Next.js Development, SEO Agency, Conversion Rate Optimization, Three.js 3D Websites">
+  <meta name="author" content="Devlooopers Studio">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devlooopers.com/">
+  <meta property="og:title" content="Devlooopers — Full-Stack Web Development, Meta Ads & Digital Marketing Agency">
+  <meta property="og:description" content="We engineer fast web applications, high-ROAS Meta Ads, and organic SEO engines that scale revenue predictably.">
+  <meta property="og:image" content="/assets/devlooopers-logo.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://devlooopers.com/">
+  <meta property="twitter:title" content="Devlooopers — Full-Stack Web Development, Meta Ads & Digital Marketing Agency">
+  <meta property="twitter:description" content="We engineer fast web applications, high-ROAS Meta Ads, and organic SEO engines that scale revenue predictably.">
+  <meta property="twitter:image" content="/assets/devlooopers-logo.png">
+
+  <!-- Favicon & Icons -->
+  <link rel="icon" type="image/png" href="/assets/devlooopers-logo-d.png">
+  <link rel="apple-touch-icon" href="/assets/devlooopers-logo-d.png">
+
+  <!-- Preconnect Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/bootstrap.min.css">
+
+  <!-- Structured Data JSON-LD Schema for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Devlooopers",
+    "image": "https://devlooopers.com/assets/devlooopers-logo.png",
+    "url": "https://devlooopers.com",
+    "telephone": "+91-9876543210",
+    "priceRange": "$$$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Mumbai",
+      "addressRegion": "Maharashtra",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 19.0760,
+      "longitude": 72.8777
+    },
+    "description": "Full-stack web engineering, Meta Ads performance marketing, technical SEO and 3D web experience agency.",
+    "serviceType": [
+      "Meta Ads Management",
+      "Facebook & Instagram Advertising",
+      "Custom Web Development",
+      "React & Next.js Development",
+      "Search Engine Optimization (SEO)",
+      "Conversion Rate Optimization (CRO)",
+      "3D WebGL Experiences"
+    ],
+    "sameAs": [
+      "https://instagram.com/devlooopers",
+      "https://linkedin.com/company/devlooopers",
+      "https://github.com/devlooopers"
+    ]
+  }
+  </script>
 </head>
-<body data-page="home" class="intro-running">
-<div class="noise"></div>
-
-<!-- Custom Interactive Magnetic Cursor (Desktop) -->
-<div class="custom-cursor" id="customCursor" aria-hidden="true">
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring">
-    <span class="cursor-icon"></span>
-    <span class="cursor-label"></span>
-  </div>
-</div>
-
-<!-- Studio Choreographed 0-5s Intro Stage -->
-<div id="studioIntro" class="studio-intro" aria-hidden="true">
-  <div class="intro-flying-brand" id="introFlyingBrand">
-    <img src="assets/devlooopers-logo-d.png" alt="devlooopers icon" class="intro-brand-icon">
-    <img src="assets/devlooopers-logo.png" alt="devlooopers wordmark" class="intro-brand-text">
-  </div>
-  <div class="intro-click-hint">Click anywhere to skip ↗</div>
-</div>
-
-<header class="site-header" id="siteHeader">
-  <a class="brand" id="navBrand" href="index.html" aria-label="devlooopers home" data-cursor="HOME">
-    <img src="assets/devlooopers-logo-d.png" alt="devlooopers icon" class="brand-logo-icon">
-    <img src="assets/devlooopers-logo.png" alt="devlooopers" class="brand-logo-text">
-  </a>
-  <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
-  <nav class="nav" aria-label="Primary">
-    <a class="active" href="index.html" data-cursor="HOME">Home</a>
-    <a href="work.html" data-cursor="WORK">Work</a>
-    <a href="services.html" data-cursor="SERVICES">Services</a>
-    <a href="about.html" data-cursor="STUDIO">Studio</a>
-    <a class="nav-cta" href="contact.html" data-cursor="START">Start a project <span>↗</span></a>
-  </nav>
-</header>
-
-<main>
-  <section class="hero shell">
-    <div class="hero-copy">
-      <div class="eyebrow hero-eyebrow">
-        <span>DIGITAL STUDIO</span> <i>·</i> <span>DESIGN × CODE × CURIOSITY</span>
-      </div>
-      <h1 class="display hero-display" aria-label="BUILD THE UNEXPECTED.">
-        <span class="line-mask"><span class="line-item line-1">BUILD</span></span>
-        <span class="line-mask"><span class="line-item line-2">THE</span></span>
-        <span class="line-mask"><span class="line-item line-3 gradient-text">UNEXPECTED.</span></span>
-      </h1>
-      <p class="hero-lead hero-lead-reveal">We design bold websites, intelligent products and interactive experiences for teams ready to move beyond ordinary.</p>
-      <div class="hero-actions hero-actions-reveal">
-        <a class="button primary" href="work.html" data-cursor="EXPLORE" data-magnetic="true">Explore our work <span>↗</span></a>
-        <a class="text-link" href="contact.html" data-cursor="CONTACT">Tell us what you're building <span>→</span></a>
-      </div>
-    </div>
-    <div class="hero-visual hero-visual-reveal" aria-label="Interactive 3D showcase" data-cursor="EXPLORE" data-cursor-icon="⊕">
-      <div class="orbit-label label-a">3D / WEBGL</div>
-      <div class="orbit-label label-b">UI / UX</div>
-      <div class="orbit-label label-c">AI / CODE</div>
-      <div class="orbital orbital-1"></div>
-      <div class="orbital orbital-2"></div>
-      <div class="orbital orbital-3"></div>
-      <div class="scene-3d" id="heroScene">
-        <canvas id="heroCanvas" width="500" height="500"></canvas>
-        <div class="float-card card-one" data-cursor="SHAPE"><span>01</span><b>Shape</b><small>strategy</small></div>
-        <div class="float-card card-two" data-cursor="DESIGN"><span>02</span><b>Design</b><small>experience</small></div>
-        <div class="float-card card-three" data-cursor="SHIP"><span>03</span><b>Ship</b><small>technology</small></div>
-      </div>
-      <div class="hero-touch-hint" id="heroTouchHint"><span class="touch-icon">👆</span><span>DRAG ↔ TO ROTATE 3D</span></div>
-      <div class="hero-glow"></div>
-    </div>
-  </section>
-
-  <section class="marquee-wrap" aria-label="Capabilities">
-    <div class="marquee"><span>BRAND SYSTEMS</span><b>✦</b><span>PRODUCT DESIGN</span><b>✦</b><span>3D EXPERIENCES</span><b>✦</b><span>AI PRODUCTS</span><b>✦</b><span>FRONTEND ENGINEERING</span><b>✦</b><span>BRAND SYSTEMS</span><b>✦</b><span>PRODUCT DESIGN</span><b>✦</b></div>
-  </section>
-
-  <section class="section shell split-section what-we-do-section">
-    <div class="section-kicker reveal">01 / WHAT WE DO</div>
-    <div class="section-body">
-      <div class="what-we-do-head">
-        <h2 class="section-title reveal">Ideas are only the <span class="gradient-text">starting point.</span></h2>
-        <p class="section-copy reveal delay-1">devlooopers brings strategy, visual design and software engineering into one tight loop. The result is digital work that looks distinctive, behaves beautifully and can actually ship.</p>
-      </div>
-      
-      <!-- Interactive 3D Capabilities Grid -->
-      <div class="capability-grid-interactive reveal delay-2" id="interactiveCapabilities">
-        
-        <!-- 01 / Experience Design -->
-        <a href="services.html" class="capability-card-interactive" data-capability="design" data-cursor="EXPERIENCE">
-          <div class="cap-glare"></div>
-          <div class="cap-header">
-            <span class="cap-num">01</span>
-            <div class="cap-live-badge">
-              <span class="cap-badge-pulse"></span>
-              <span class="cap-badge-text">SPATIAL UX</span>
-            </div>
-          </div>
-          
-          <div class="cap-micro-stage">
-            <div class="cap-bezier-art">
-              <svg viewBox="0 0 220 70" class="cap-svg-canvas" aria-hidden="true">
-                <path d="M 15 55 C 65 10, 155 65, 205 15" class="cap-curve-line" />
-                <circle cx="15" cy="55" r="4.5" class="cap-node-dot cnd-1" />
-                <circle cx="65" cy="10" r="4.5" class="cap-node-dot cnd-2" />
-                <circle cx="155" cy="65" r="4.5" class="cap-node-dot cnd-3" />
-                <circle cx="205" cy="15" r="4.5" class="cap-node-dot cnd-4" />
-              </svg>
-              <div class="cap-ghost-card gc-1"></div>
-              <div class="cap-ghost-card gc-2"></div>
-            </div>
-          </div>
-
-          <div class="cap-main">
-            <h3 class="cap-title">Experience Design</h3>
-            <p class="cap-desc">Interfaces, tactile interactions, and design systems made to feel obvious and memorable.</p>
-          </div>
-
-          <div class="cap-tags">
-            <span>Mental Models</span>
-            <span>Design Systems</span>
-            <span>Prototypes</span>
-          </div>
-
-          <div class="cap-footer">
-            <span class="cap-action-label">Explore capability</span>
-            <span class="cap-action-arrow">↗</span>
-          </div>
-        </a>
-
-        <!-- 02 / Creative Technology -->
-        <a href="services.html" class="capability-card-interactive" data-capability="creative" data-cursor="CREATIVE">
-          <div class="cap-glare"></div>
-          <div class="cap-header">
-            <span class="cap-num">02</span>
-            <div class="cap-live-badge">
-              <span class="cap-badge-pulse pulse-blue"></span>
-              <span class="cap-badge-text">3D / SHADERS</span>
-            </div>
-          </div>
-          
-          <div class="cap-micro-stage">
-            <div class="cap-particles-art">
-              <div class="cap-ring cr-1"></div>
-              <div class="cap-ring cr-2"></div>
-              <div class="cap-ring cr-3"></div>
-              <div class="cap-core-sparkle">✦</div>
-            </div>
-          </div>
-
-          <div class="cap-main">
-            <h3 class="cap-title">Creative Technology</h3>
-            <p class="cap-desc">WebGL, 3D scenes, custom shaders, and expressive playful interfaces that reward exploration.</p>
-          </div>
-
-          <div class="cap-tags">
-            <span>WebGL / Three.js</span>
-            <span>Custom Shaders</span>
-            <span>60fps Motion</span>
-          </div>
-
-          <div class="cap-footer">
-            <span class="cap-action-label">Explore capability</span>
-            <span class="cap-action-arrow">↗</span>
-          </div>
-        </a>
-
-        <!-- 03 / Product Engineering -->
-        <a href="services.html" class="capability-card-interactive" data-capability="engineering" data-cursor="ENGINEER">
-          <div class="cap-glare"></div>
-          <div class="cap-header">
-            <span class="cap-num">03</span>
-            <div class="cap-live-badge">
-              <span class="cap-badge-pulse pulse-green"></span>
-              <span class="cap-badge-text">HIGH-PERF</span>
-            </div>
-          </div>
-          
-          <div class="cap-micro-stage">
-            <div class="cap-code-art">
-              <div class="cap-code-row"><span class="cc-kw">const</span> <span class="cc-var">app</span> = <span class="cc-fn">renderSpatial</span>();</div>
-              <div class="cap-code-row"><span class="cc-kw">await</span> <span class="cc-var">cluster</span>.<span class="cc-fn">deploy</span>(<span class="cc-str">'edge'</span>);</div>
-              <div class="cap-code-row cc-highlight"><span class="cc-ok">✓ 100% Score</span> <span class="cc-cursor"></span></div>
-            </div>
-          </div>
-
-          <div class="cap-main">
-            <h3 class="cap-title">Product Engineering</h3>
-            <p class="cap-desc">Fast, responsive frontends and resilient cloud systems built around real user needs.</p>
-          </div>
-
-          <div class="cap-tags">
-            <span>Next.js / Vite</span>
-            <span>Scalable APIs</span>
-            <span>Edge Infrastructure</span>
-          </div>
-
-          <div class="cap-footer">
-            <span class="cap-action-label">Explore capability</span>
-            <span class="cap-action-arrow">↗</span>
-          </div>
-        </a>
-
-        <!-- 04 / AI & Automation -->
-        <a href="services.html" class="capability-card-interactive" data-capability="ai" data-cursor="AI WORKFLOW">
-          <div class="cap-glare"></div>
-          <div class="cap-header">
-            <span class="cap-num">04</span>
-            <div class="cap-live-badge">
-              <span class="cap-badge-pulse pulse-purple"></span>
-              <span class="cap-badge-text">AUTONOMOUS</span>
-            </div>
-          </div>
-          
-          <div class="cap-micro-stage">
-            <div class="cap-synapse-art">
-              <div class="cap-syn-core"></div>
-              <div class="cap-syn-orbit so-1"></div>
-              <div class="cap-syn-orbit so-2"></div>
-              <div class="cap-syn-node n-1"></div>
-              <div class="cap-syn-node n-2"></div>
-              <div class="cap-syn-node n-3"></div>
-            </div>
-          </div>
-
-          <div class="cap-main">
-            <h3 class="cap-title">AI & Automation</h3>
-            <p class="cap-desc">Practical AI layers, intelligent multi-agent workflows, and assistants that create leverage.</p>
-          </div>
-
-          <div class="cap-tags">
-            <span>Agent Workflows</span>
-            <span>Vector RAG</span>
-            <span>LLM Tooling</span>
-          </div>
-
-          <div class="cap-footer">
-            <span class="cap-action-label">Explore capability</span>
-            <span class="cap-action-arrow">↗</span>
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="section shell work-preview">
-    <div class="section-head reveal"><div><div class="section-kicker">02 / SELECTED WORK</div><h2 class="section-title compact">A few things we've <span class="gradient-text">made move.</span></h2></div><a class="text-link" href="work.html" data-cursor="ALL WORK">See all work <span>→</span></a></div>
-    <div class="project-grid">
-      <div class="project-card large reveal" data-project="orbit" data-cursor="OPEN" data-cursor-text="VIEW PROJECT">
-        <div class="project-card-inner">
-          <div class="card-glare"></div>
-          <div class="project-art art-orbit">
-            <div class="scene-orbit" id="orbitScene">
-              <div class="orbit-glow"></div>
-              <svg class="orbit-svg" viewBox="0 0 300 300" aria-hidden="true">
-                <ellipse class="orbit-path" cx="150" cy="150" rx="110" ry="44" />
-                <line class="orbit-connector" x1="75" y1="135" x2="225" y2="165" />
-                <circle class="orbit-satellite sat-1" cx="75" cy="135" r="7" />
-                <circle class="orbit-satellite sat-2" cx="225" cy="165" r="7" />
-              </svg>
-              <div class="orbit-core"><div class="orbit-core-pulse"></div></div>
-            </div>
-            <div class="project-chip">PRODUCT / 2026</div>
-            <div class="project-word">ORBIT</div>
-            <div class="project-hover-badge"><span>VIEW</span> ↗</div>
-          </div>
-          <div class="project-meta">
-            <div>
-              <h3>Orbit Logistics</h3>
-              <p>Operations platform</p>
-            </div>
-            <span class="meta-arrow">↗</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="project-card reveal delay-1" data-project="nova" data-cursor="OPEN" data-cursor-text="VIEW PROJECT">
-        <div class="project-card-inner">
-          <div class="card-glare"></div>
-          <div class="project-art art-nova">
-            <div class="scene-nova" id="novaScene">
-              <div class="nova-grid"></div>
-              <div class="nova-sphere"></div>
-              <div class="nova-rings"></div>
-              <div class="nova-coords"><span>LAT: 47.32°</span><span>LNG: -122.18°</span></div>
-            </div>
-            <div class="project-chip">3D / WEBGL</div>
-            <div class="project-word">NOVA</div>
-            <div class="project-hover-badge"><span>VIEW</span> ↗</div>
-          </div>
-          <div class="project-meta">
-            <div>
-              <h3>Nova Spaces</h3>
-              <p>Interactive launch site</p>
-            </div>
-            <span class="meta-arrow">↗</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="project-card reveal delay-2" data-project="loop" data-cursor="OPEN" data-cursor-text="VIEW PROJECT">
-        <div class="project-card-inner">
-          <div class="card-glare"></div>
-          <div class="project-art art-loop">
-            <div class="scene-loop" id="loopScene">
-              <canvas class="loop-wave-canvas" width="280" height="240"></canvas>
-              <div class="loop-symbol">∞</div>
-              <div class="loop-nodes">
-                <span class="l-node n1"></span><span class="l-node n2"></span><span class="l-node n3"></span>
-              </div>
-            </div>
-            <div class="project-chip">AI / PLATFORM</div>
-            <div class="project-word">LOOP</div>
-            <div class="project-hover-badge"><span>VIEW</span> ↗</div>
-          </div>
-          <div class="project-meta">
-            <div>
-              <h3>Loop Intelligence</h3>
-              <p>AI workflow system</p>
-            </div>
-            <span class="meta-arrow">↗</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Kinetic Typographic Scroll Section -->
-  <section class="kinetic-statement-section" id="kineticStatementSection">
-    <div class="kinetic-sticky-stage" id="kineticStickyStage">
-      <div class="kinetic-bg-grid"></div>
-      <div class="kinetic-glow" id="kineticGlow"></div>
-      
-      <div class="kinetic-inner shell">
-        <div class="kinetic-meta-top">
-          <span class="kinetic-kicker">03 / MANIFESTO</span>
-          <span class="kinetic-coords">DESIGN × CODE × CURIOSITY</span>
-        </div>
-        
-        <div class="kinetic-type-box" id="kineticTypeBox">
-          <!-- Line 1: BRINGING YOUR (compresses tightly) -->
-          <div class="kinetic-line kinetic-line-compress line-we-build" id="kLineWeBuild">
-            <span class="k-word word-we">BRINGING</span>
-            <span class="k-word word-build">YOUR</span>
-          </div>
-          
-          <!-- Line 2: DIGITAL VISION (expands across screen) -->
-          <div class="kinetic-line kinetic-line-expand line-digital" id="kLineDigital">
-            <span class="k-word word-digital gradient-text">DIGITAL VISION</span>
-          </div>
-          
-          <!-- Line 3: TO LIFE (moves horizontally) -->
-          <div class="kinetic-line kinetic-line-drift line-experiences" id="kLineExperiences">
-            <div class="experiences-track kinetic-drift-track" id="experiencesTrack">
-              <span class="k-word word-experiences">TO LIFE</span>
-              <span class="k-spark">✦</span>
-              <span class="k-word word-sub">DESIGN × CODE × CURIOSITY</span>
-              <span class="k-spark">✦</span>
-              <span class="k-word word-repeat">TO LIFE</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="kinetic-meta-bottom">
-          <div class="kinetic-meter">
-            <span class="meter-text">MANIFESTO CADENCE</span>
-            <div class="meter-track">
-              <div class="meter-bar" id="kineticMeterBar"></div>
-            </div>
-          </div>
-          <span class="kinetic-tagline">“Bringing your digital vision to life.”</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section shell final-cta">
-    <div class="cta-panel reveal">
-      <div class="section-kicker">03 / NEXT MOVE</div>
-      <h2>Have a problem worth <span class="gradient-text">solving?</span></h2>
-      <a class="button primary" href="contact.html" data-cursor="LET'S TALK" data-magnetic="true">Start a conversation <span>↗</span></a>
-    </div>
-  </section>
-</main>
-
-<!-- Fullscreen Project Showcase Transition Modal -->
-<div id="projectModal" class="project-modal" aria-hidden="true" role="dialog" aria-modal="true">
-  <div class="project-modal-backdrop" id="modalBackdrop"></div>
-  <div class="project-modal-sheet" id="modalSheet">
-    <button class="project-modal-close" id="modalClose" aria-label="Close project showcase" data-cursor="CLOSE">✕</button>
-    <div class="project-modal-scroll">
-      <div class="project-modal-hero" id="modalHero">
-        <div class="modal-hero-art" id="modalHeroArt"></div>
-        <div class="modal-hero-overlay">
-          <div class="modal-chip" id="modalChip">PRODUCT / 2026</div>
-          <h1 class="modal-title" id="modalTitle">Orbit Logistics</h1>
-          <p class="modal-subtitle" id="modalSubtitle">Global freight intelligence and real-time fleet coordination platform.</p>
-        </div>
-      </div>
-      
-      <div class="project-modal-body shell">
-        <div class="modal-grid">
-          <div class="modal-main">
-            <div class="modal-section">
-              <span class="section-kicker">THE CHALLENGE</span>
-              <p id="modalChallenge">Logistics teams navigate dozens of siloed monitoring screens, resulting in slow reaction times and cognitive fatigue during high-volume operations.</p>
-            </div>
-            
-            <div class="modal-section">
-              <span class="section-kicker">THE SOLUTION</span>
-              <p id="modalSolution">We engineered a tactile, unified command center with spatial telemetry maps, dynamic routing simulations, and predictive alerting.</p>
-            </div>
-
-            <div class="modal-section">
-              <span class="section-kicker">INTERACTIVE SYSTEM SIMULATION</span>
-              <div class="modal-interactive-box" id="modalInteractiveBox">
-                <!-- Dynamic Interactive Demo Area -->
-              </div>
-            </div>
-          </div>
-          
-          <aside class="modal-sidebar">
-            <div class="modal-sidebar-card">
-              <span class="section-kicker">DELIVERABLES</span>
-              <ul class="modal-list" id="modalDeliverables">
-                <li>UX Strategy & Design System</li>
-                <li>WebGL Interactive Telemetry</li>
-                <li>Fullstack Production Deployment</li>
-              </ul>
-            </div>
-            
-            <div class="modal-sidebar-card">
-              <span class="section-kicker">KEY METRICS</span>
-              <div class="modal-stats" id="modalStats">
-                <div class="stat-item"><span class="stat-num">+140%</span><span class="stat-lbl">Dispatch Speed</span></div>
-                <div class="stat-item"><span class="stat-num">45ms</span><span class="stat-lbl">Sync Latency</span></div>
-                <div class="stat-item"><span class="stat-num">99.98%</span><span class="stat-lbl">Accuracy</span></div>
-              </div>
-            </div>
-
-            <div class="modal-sidebar-card">
-              <span class="section-kicker">TECHNOLOGY STACK</span>
-              <div class="tag-row modal-tags" id="modalTech">
-                <span>Three.js</span>
-                <span>WebGL</span>
-                <span>TypeScript</span>
-                <span>Tailored CSS</span>
-              </div>
-            </div>
-
-            <div class="modal-sidebar-actions">
-              <a href="contact.html" class="button primary w-100" data-cursor="START">Start Similar Project ↗</a>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer class="site-footer shell">
-  <div class="footer-brand">
-    <img src="assets/devlooopers-logo-d.png" alt="devlooopers" class="footer-logo-icon">
-    <span>© 2026 devlooopers</span>
-  </div>
-  <div>Design × Code × Curiosity</div>
-  <div><a href="contact.html" data-cursor="CONTACT">Contact</a></div>
-</footer>
-
-<!-- Fullscreen Card Expansion Navigation Portal -->
-<div id="navExpansionPortal" class="nav-expansion-portal" aria-hidden="true">
-  <div class="portal-card" id="portalCard">
-    <div class="portal-art" id="portalArt"></div>
-    <div class="portal-content" id="portalContent">
-      <div class="portal-chip" id="portalChip">PRODUCT / 2026</div>
-      <h1 class="portal-title" id="portalTitle">ORBIT</h1>
-      <p class="portal-subtitle" id="portalSubtitle">Operations platform</p>
-    </div>
-  </div>
-</div>
-
-<script src="assets/bootstrap.bundle.min.js"></script>
-<script src="assets/three.min.js"></script>
-<script src="script.js"></script>
+<body data-page="home">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

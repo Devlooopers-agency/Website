@@ -1,0 +1,254 @@
+/* ============================================================================
+   CONTINUOUS JOURNEY LINE ENGINE STYLES
+   Global Scroll-Driven Visual Navigation Layer
+   Background Layering with Zero Content / Text Overlaps
+   ============================================================================ */
+
+:root {
+  --journey-base: #e7ebf2;
+  --journey-indigo: #5350d7;
+  --journey-blue: #377cd6;
+  --journey-cyan: #30a1bf;
+  --journey-green: #39cf72;
+}
+
+.section-dark {
+  --journey-base: rgba(255, 255, 255, 0.16);
+}
+
+/* 1. Global Container - Layered in the True Background (z-index: 2) */
+.journey-line-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+  transition: opacity 400ms ease;
+}
+
+/* Elevate all content layers above the journey line layer so the line flows behind */
+.shell,
+.hero-copy,
+.hero-visual,
+.hero-actions,
+.hero-trust-grid,
+.what-we-do-head,
+.capabilities-interactive-grid,
+.capability-card-interactive,
+.project-card,
+.why-bento-card,
+.testimonial-card,
+.kinetic-inner,
+.faq-accordion-container,
+.faq-interactive-card,
+.cta-panel,
+.footer-shell {
+  position: relative;
+  z-index: 3;
+}
+
+/* Modal Open state: Suppress journey line background activity */
+body.modal-open .journey-line-container {
+  opacity: 0.08 !important;
+}
+
+/* The global SVG canvas */
+.journey-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Inactive Base Path - Hidden: Line reveals progressively on scroll */
+.journey-base-path {
+  fill: none;
+  stroke: none !important;
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Active Progress Path - Solid Vibrant Gradient (Zero Shadows/Glows) */
+.journey-active-path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 8px;
+  opacity: 1;
+  stroke-dashoffset: 0;
+}
+
+/* Traveling Energy Node */
+.journey-traveler {
+  transform-origin: center;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.traveler-glow {
+  fill: rgba(48, 161, 191, 0.25);
+  transform-origin: center;
+  will-change: transform;
+}
+
+.traveler-core {
+  fill: var(--journey-cyan);
+}
+
+/* Milestones Container */
+.journey-milestones {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4; /* Stations sit slightly above for clear visibility in side margins */
+}
+
+/* Milestone Station - Hidden until scroll traveler arrives */
+.journey-milestone {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.65);
+  display: flex;
+  align-items: center;
+  transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.milestone-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 3px solid var(--journey-cyan);
+  background: #080a0f;
+  transition: background 250ms ease, border-color 250ms ease, transform 250ms ease;
+  flex-shrink: 0;
+}
+
+/* Milestone Label Badge with clean frosted background to ensure zero text conflicts */
+.milestone-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  background: rgba(8, 10, 15, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 250ms ease, transform 250ms ease, color 250ms ease, border-color 250ms ease;
+}
+
+/* Left-aligned station: Label points safely inward to the right */
+.journey-milestone.milestone-align-left .milestone-label {
+  left: 18px;
+  right: auto;
+  text-align: left;
+}
+
+/* Right-aligned station: Label points safely inward to the left */
+.journey-milestone.milestone-align-right .milestone-label {
+  right: 18px;
+  left: auto;
+  text-align: right;
+}
+
+/* Milestone Completed State - Fades in as the line scrolls through */
+.journey-milestone.completed {
+  opacity: 0.95;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.journey-milestone.completed .milestone-dot {
+  background: var(--journey-green);
+  border-color: var(--journey-cyan);
+}
+
+.journey-milestone.completed .milestone-label {
+  opacity: 0.85;
+  color: #cbd5e1;
+}
+
+/* Milestone Active State - Focused when currently scrolling near section */
+.journey-milestone.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.journey-milestone.active .milestone-dot {
+  background: var(--journey-cyan);
+  border-color: var(--journey-indigo);
+  transform: scale(1.3);
+}
+
+.journey-milestone.active .milestone-label {
+  opacity: 1;
+  color: #ffffff;
+  border-color: rgba(48, 161, 191, 0.4);
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 1199px) {
+  .journey-active-path {
+    stroke-width: 6.5px;
+  }
+  .milestone-dot {
+    width: 12px;
+    height: 12px;
+    border-width: 2.5px;
+  }
+}
+
+@media (max-width: 767px) {
+  .journey-active-path {
+    stroke-width: 5px;
+  }
+  .milestone-dot {
+    width: 10px;
+    height: 10px;
+    border-width: 2px;
+  }
+  .milestone-label {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    padding: 2px 6px;
+  }
+  .journey-milestone.milestone-align-left .milestone-label {
+    left: 14px;
+  }
+}
+
+/* Accessibility: Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .journey-line-container,
+  .journey-milestone,
+  .milestone-dot,
+  .milestone-label,
+  .traveler-glow {
+    transition: none !important;
+    animation: none !important;
+  }
+}
