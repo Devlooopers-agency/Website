@@ -63,23 +63,23 @@ export default function ContactPage() {
         <div className="kinetic-sticky-stage">
           <div className="kinetic-bg-grid"></div>
           <div className="kinetic-glow"></div>
-          
+
           <div className="kinetic-inner shell">
             <div className="kinetic-meta-top">
               <span className="kinetic-kicker">05 / INITIATIVE</span>
               <span className="kinetic-coords">INQUIRY × EXPERIMENT × LAUNCH</span>
             </div>
-            
+
             <div className="kinetic-type-box">
               <div className="kinetic-line kinetic-line-compress">
                 <span className="k-word">LET'S</span>
                 <span className="k-word">BUILD</span>
               </div>
-              
+
               <div className="kinetic-line kinetic-line-expand">
                 <span className="k-word gradient-text">UNEXPECTED</span>
               </div>
-              
+
               <div className="kinetic-line kinetic-line-drift line-experiences">
                 <div className="experiences-track kinetic-drift-track" ref={driftTrackRef}>
                   <span className="k-word">TOGETHER</span>
@@ -90,7 +90,7 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="kinetic-meta-bottom">
               <div className="kinetic-meter">
                 <span className="meter-text">INITIATION VECTOR</span>
@@ -111,87 +111,87 @@ export default function ContactPage() {
         data-theme="dark"
       >
         <div className="shell contact-grid">
-        <form className="contact-form reveal" id="contactForm" onSubmit={handleSubmit}>
-          <div className="field-row">
+          <form className="contact-form reveal" id="contactForm" onSubmit={handleSubmit}>
+            <div className="field-row">
+              <div className="floating-group">
+                <input
+                  required
+                  type="text"
+                  id="fieldName"
+                  name="name"
+                  className={`floating-input ${formData.name ? 'has-value' : ''}`}
+                  placeholder=" "
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+                <label htmlFor="fieldName" className="floating-label">Your Name</label>
+              </div>
+              <div className="floating-group">
+                <input
+                  required
+                  type="email"
+                  id="fieldEmail"
+                  name="email"
+                  className={`floating-input ${formData.email ? 'has-value' : ''}`}
+                  placeholder=" "
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                <label htmlFor="fieldEmail" className="floating-label">Your Email</label>
+              </div>
+            </div>
             <div className="floating-group">
               <input
-                required
                 type="text"
-                id="fieldName"
-                name="name"
-                className={`floating-input ${formData.name ? 'has-value' : ''}`}
+                id="fieldCompany"
+                name="company"
+                className={`floating-input ${formData.company ? 'has-value' : ''}`}
                 placeholder=" "
-                value={formData.name}
+                value={formData.company}
                 onChange={handleChange}
               />
-              <label htmlFor="fieldName" className="floating-label">Your Name</label>
+              <label htmlFor="fieldCompany" className="floating-label">Company / Team</label>
             </div>
             <div className="floating-group">
-              <input
+              <textarea
                 required
-                type="email"
-                id="fieldEmail"
-                name="email"
-                className={`floating-input ${formData.email ? 'has-value' : ''}`}
+                id="fieldMessage"
+                name="message"
+                className={`floating-input floating-textarea ${formData.message ? 'has-value' : ''}`}
+                rows="6"
                 placeholder=" "
-                value={formData.email}
+                value={formData.message}
                 onChange={handleChange}
-              />
-              <label htmlFor="fieldEmail" className="floating-label">Your Email</label>
+              ></textarea>
+              <label htmlFor="fieldMessage" className="floating-label">What are you building?</label>
             </div>
-          </div>
-          <div className="floating-group">
-            <input
-              type="text"
-              id="fieldCompany"
-              name="company"
-              className={`floating-input ${formData.company ? 'has-value' : ''}`}
-              placeholder=" "
-              value={formData.company}
-              onChange={handleChange}
-            />
-            <label htmlFor="fieldCompany" className="floating-label">Company / Team</label>
-          </div>
-          <div className="floating-group">
-            <textarea
-              required
-              id="fieldMessage"
-              name="message"
-              className={`floating-input floating-textarea ${formData.message ? 'has-value' : ''}`}
-              rows="6"
-              placeholder=" "
-              value={formData.message}
-              onChange={handleChange}
-            ></textarea>
-            <label htmlFor="fieldMessage" className="floating-label">What are you building?</label>
-          </div>
-          <div className="form-foot">
-            <button className="button primary" type="submit" data-cursor="SEND" data-magnetic="true">
-              Send enquiry <span>?</span>
-            </button>
-            <small>Demo form — connect this endpoint to your backend or email provider.</small>
-          </div>
-          {statusMessage && (
-            <p className="form-status" id="formStatus" style={{ color: 'var(--green)', marginTop: '12px' }} aria-live="polite">
-              {statusMessage}
-            </p>
-          )}
-        </form>
+            <div className="form-foot">
+              <button className="button primary" type="submit" data-cursor="SEND" data-magnetic="true">
+                Send enquiry <span>?</span>
+              </button>
+              <small>Demo form — connect this endpoint to your backend or email provider.</small>
+            </div>
+            {statusMessage && (
+              <p className="form-status" id="formStatus" style={{ color: 'var(--green)', marginTop: '12px' }} aria-live="polite">
+                {statusMessage}
+              </p>
+            )}
+          </form>
 
-        <aside className="contact-aside reveal delay-1">
-          <div className="section-kicker">DIRECT</div>
-          <h2>hello@devlooopers.com</h2>
-          <p>For partnerships, project briefs and experiments.</p>
-          <div className="social-row">
-            <a href="#" data-cursor="LINKEDIN">LinkedIn ?</a>
-            <a href="#" data-cursor="INSTAGRAM">Instagram ?</a>
-            <a href="#" data-cursor="GITHUB">GitHub ?</a>
-          </div>
-          <div className="aside-note">
-            <span>BASED IN</span>
-            <strong>India · Working globally</strong>
-          </div>
-        </aside>
+          <aside className="contact-aside reveal delay-1">
+            <div className="section-kicker">DIRECT</div>
+            <h2>Info@devlooopers.in</h2>
+            <p>For partnerships, project briefs and experiments.</p>
+            <div className="social-row">
+              <a href="#" data-cursor="LINKEDIN">LinkedIn ?</a>
+              <a href="#" data-cursor="INSTAGRAM">Instagram ?</a>
+              <a href="#" data-cursor="GITHUB">GitHub ?</a>
+            </div>
+            <div className="aside-note">
+              <span>BASED IN</span>
+              <strong>India · Working globally</strong>
+            </div>
+          </aside>
         </div>
       </section>
     </main>

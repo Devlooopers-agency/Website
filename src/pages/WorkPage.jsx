@@ -89,91 +89,109 @@ export default function WorkPage({ onOpenProject }) {
   useEffect(() => {
     // Loop Wave Canvas Physics
     const canvas = loopCanvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        let active = true;
-        let wavePhase = 0;
-        let waveAnimId = null;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-        function renderLoopWave() {
-          if (!active) return;
-          const w = (canvas.width = canvas.clientWidth || 280);
-          const h = (canvas.height = canvas.clientHeight || 200);
-          ctx.clearRect(0, 0, w, h);
-          wavePhase += 0.035;
+    let active = true;
+    let wavePhase = 0;
+    let waveAnimId = null;
 
-          for (let r = 0; r < 3; r++) {
-            ctx.beginPath();
-            const rOffset = r * 0.7;
-            ctx.lineWidth = 1.6 - r * 0.3;
-            ctx.strokeStyle = r === 0 ? 'rgba(83, 80, 215, 0.45)' : r === 1 ? 'rgba(48, 161, 191, 0.4)' : 'rgba(57, 207, 114, 0.35)';
+    let w = (canvas.width = canvas.clientWidth || 280);
+    let h = (canvas.height = canvas.clientHeight || 200);
 
-            for (let x = 0; x <= w; x += 6) {
-              const normX = x / w;
-              const env = Math.sin(normX * Math.PI);
-              const y = h / 2 + Math.sin(normX * 5 + wavePhase + rOffset) * 22 * env + Math.cos(normX * 9 - wavePhase * 0.7) * 10 * env;
-              if (x === 0) ctx.moveTo(x, y);
-              else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-          }
-          waveAnimId = requestAnimationFrame(renderLoopWave);
+    const handleResize = () => {
+      if (!canvas) return;
+      w = canvas.width = canvas.clientWidth || 280;
+      h = canvas.height = canvas.clientHeight || 200;
+    };
+
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    function renderLoopWave() {
+      if (!active) return;
+      ctx.clearRect(0, 0, w, h);
+      wavePhase += 0.035;
+
+      for (let r = 0; r < 3; r++) {
+        ctx.beginPath();
+        const rOffset = r * 0.7;
+        ctx.lineWidth = 1.6 - r * 0.3;
+        ctx.strokeStyle = r === 0 ? 'rgba(83, 80, 215, 0.45)' : r === 1 ? 'rgba(48, 161, 191, 0.4)' : 'rgba(57, 207, 114, 0.35)';
+
+        for (let x = 0; x <= w; x += 8) {
+          const normX = x / w;
+          const env = Math.sin(normX * Math.PI);
+          const y = h / 2 + Math.sin(normX * 5 + wavePhase + rOffset) * 22 * env + Math.cos(normX * 9 - wavePhase * 0.7) * 10 * env;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
         }
-        waveAnimId = requestAnimationFrame(renderLoopWave);
-        return () => {
-          active = false;
-          if (waveAnimId) cancelAnimationFrame(waveAnimId);
-        };
+        ctx.stroke();
       }
+      waveAnimId = requestAnimationFrame(renderLoopWave);
     }
+    waveAnimId = requestAnimationFrame(renderLoopWave);
+    return () => {
+      active = false;
+      window.removeEventListener('resize', handleResize);
+      if (waveAnimId) cancelAnimationFrame(waveAnimId);
+    };
   }, [activeFilter]);
 
   useEffect(() => {
     // Apex Chart Depth Wave Canvas
     const canvas = apexCanvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        let active = true;
-        let tick = 0;
-        let apexAnimId = null;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-        function renderApexWave() {
-          if (!active) return;
-          const w = (canvas.width = canvas.clientWidth || 280);
-          const h = (canvas.height = canvas.clientHeight || 200);
-          ctx.clearRect(0, 0, w, h);
-          tick += 0.04;
+    let active = true;
+    let tick = 0;
+    let apexAnimId = null;
 
-          // Background glowing grid bars
-          for (let i = 0; i < 8; i++) {
-            const barH = 30 + Math.sin(tick + i * 0.8) * 20;
-            const barX = 20 + i * 32;
-            ctx.fillStyle = 'rgba(57, 207, 114, 0.15)';
-            ctx.fillRect(barX, h - barH - 20, 18, barH);
-          }
+    let w = (canvas.width = canvas.clientWidth || 280);
+    let h = (canvas.height = canvas.clientHeight || 200);
 
-          // Dynamic market depth curve
-          ctx.beginPath();
-          ctx.strokeStyle = '#39cf72';
-          ctx.lineWidth = 2;
-          for (let x = 0; x <= w; x += 5) {
-            const y = h * 0.6 + Math.sin(x * 0.04 + tick) * 18 - (x / w) * 24;
-            if (x === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.stroke();
+    const handleResize = () => {
+      if (!canvas) return;
+      w = canvas.width = canvas.clientWidth || 280;
+      h = canvas.height = canvas.clientHeight || 200;
+    };
 
-          apexAnimId = requestAnimationFrame(renderApexWave);
-        }
-        apexAnimId = requestAnimationFrame(renderApexWave);
-        return () => {
-          active = false;
-          if (apexAnimId) cancelAnimationFrame(apexAnimId);
-        };
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    function renderApexWave() {
+      if (!active) return;
+      ctx.clearRect(0, 0, w, h);
+      tick += 0.04;
+
+      // Background glowing grid bars
+      for (let i = 0; i < 8; i++) {
+        const barH = 30 + Math.sin(tick + i * 0.8) * 20;
+        const barX = 20 + i * 32;
+        ctx.fillStyle = 'rgba(57, 207, 114, 0.15)';
+        ctx.fillRect(barX, h - barH - 20, 18, barH);
       }
+
+      // Dynamic market depth curve
+      ctx.beginPath();
+      ctx.strokeStyle = '#39cf72';
+      ctx.lineWidth = 2;
+      for (let x = 0; x <= w; x += 6) {
+        const y = h * 0.6 + Math.sin(x * 0.04 + tick) * 18 - (x / w) * 24;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      apexAnimId = requestAnimationFrame(renderApexWave);
     }
+    apexAnimId = requestAnimationFrame(renderApexWave);
+    return () => {
+      active = false;
+      window.removeEventListener('resize', handleResize);
+      if (apexAnimId) cancelAnimationFrame(apexAnimId);
+    };
   }, [activeFilter]);
 
   return (

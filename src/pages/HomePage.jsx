@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
-import Hero3DScene from '../components/Hero3DScene.jsx';
 import CapabilityGrid from '../components/CapabilityGrid.jsx';
+
+// Lazy-load Three.js 3D scene to keep initial mobile bundle ultra-light (FCP & LCP optimization)
+const Hero3DScene = lazy(() => import('../components/Hero3DScene.jsx'));
 
 // Interactive Upgrades
 import Counter from '../components/Counter.jsx';
@@ -45,45 +47,54 @@ export default function HomePage({ onOpenProject }) {
   useEffect(() => {
     // Loop Wave Canvas Animation
     const canvas = loopCanvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        let active = true;
-        let wavePhase = 0;
-        let waveAnimId = null;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-        function renderLoopWave() {
-          if (!active) return;
-          const w = (canvas.width = canvas.clientWidth || 280);
-          const h = (canvas.height = canvas.clientHeight || 240);
-          ctx.clearRect(0, 0, w, h);
-          wavePhase += 0.035;
+    let active = true;
+    let wavePhase = 0;
+    let waveAnimId = null;
 
-          for (let r = 0; r < 3; r++) {
-            ctx.beginPath();
-            const rOffset = r * 0.7;
-            ctx.lineWidth = 1.6 - r * 0.3;
-            ctx.strokeStyle = r === 0 ? 'rgba(83, 80, 215, 0.45)' : r === 1 ? 'rgba(48, 161, 191, 0.4)' : 'rgba(57, 207, 114, 0.35)';
+    let w = (canvas.width = canvas.clientWidth || 280);
+    let h = (canvas.height = canvas.clientHeight || 240);
 
-            for (let x = 0; x <= w; x += 6) {
-              const normX = x / w;
-              const env = Math.sin(normX * Math.PI);
-              const y = h / 2 + Math.sin(normX * 5 + wavePhase + rOffset) * 26 * env + Math.cos(normX * 9 - wavePhase * 0.7) * 12 * env;
-              if (x === 0) ctx.moveTo(x, y);
-              else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-          }
-          waveAnimId = requestAnimationFrame(renderLoopWave);
+    const handleResize = () => {
+      if (!canvas) return;
+      w = canvas.width = canvas.clientWidth || 280;
+      h = canvas.height = canvas.clientHeight || 240;
+    };
+
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    function renderLoopWave() {
+      if (!active) return;
+      ctx.clearRect(0, 0, w, h);
+      wavePhase += 0.035;
+
+      for (let r = 0; r < 3; r++) {
+        ctx.beginPath();
+        const rOffset = r * 0.7;
+        ctx.lineWidth = 1.6 - r * 0.3;
+        ctx.strokeStyle = r === 0 ? 'rgba(83, 80, 215, 0.45)' : r === 1 ? 'rgba(48, 161, 191, 0.4)' : 'rgba(57, 207, 114, 0.35)';
+
+        for (let x = 0; x <= w; x += 8) {
+          const normX = x / w;
+          const env = Math.sin(normX * Math.PI);
+          const y = h / 2 + Math.sin(normX * 5 + wavePhase + rOffset) * 26 * env + Math.cos(normX * 9 - wavePhase * 0.7) * 12 * env;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
         }
-        waveAnimId = requestAnimationFrame(renderLoopWave);
-
-        return () => {
-          active = false;
-          if (waveAnimId) cancelAnimationFrame(waveAnimId);
-        };
+        ctx.stroke();
       }
+      waveAnimId = requestAnimationFrame(renderLoopWave);
     }
+    waveAnimId = requestAnimationFrame(renderLoopWave);
+
+    return () => {
+      active = false;
+      window.removeEventListener('resize', handleResize);
+      if (waveAnimId) cancelAnimationFrame(waveAnimId);
+    };
   }, []);
 
   useEffect(() => {
@@ -196,8 +207,10 @@ export default function HomePage({ onOpenProject }) {
             </div>
           </div>
 
-          {/* 3D WebGL Hero Visual Scene */}
-          <Hero3DScene />
+          {/* 3D WebGL Hero Visual Scene (Lazy-loaded) */}
+          <Suspense fallback={<div className="hero-3d-skeleton" aria-hidden="true" />}>
+            <Hero3DScene />
+          </Suspense>
         </div>
       </section>
 
@@ -485,15 +498,15 @@ export default function HomePage({ onOpenProject }) {
       </section>
 
       {/* ============================================================
-          SECTION 8: KINETIC MANIFESTO (Clean Studio Light)
+          SECTION 8: KINETIC MANIFESTO (Obsidian Dark)
           ============================================================ */}
       <section
-        className="kinetic-statement-section section-light"
+        className="kinetic-statement-section section-dark"
         id="kineticStatementSection"
         ref={kineticSectionRef}
         data-journey-section="manifesto"
         data-theme-section="manifesto"
-        data-theme="light"
+        data-theme="dark"
       >
         <div className="kinetic-sticky-stage" id="kineticStickyStage">
           <div className="kinetic-bg-grid"></div>

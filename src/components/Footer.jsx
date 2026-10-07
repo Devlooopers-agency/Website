@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="mega-site-footer" data-journey-section="footer">
       <div className="shell footer-shell">
-        
+
         {/* Top Footer Callout Box */}
         <div className="footer-top-cta">
           <div className="footer-cta-left">
@@ -24,7 +24,7 @@ export default function Footer() {
 
         {/* 4-Column Mega Navigation */}
         <div className="footer-columns-grid">
-          
+
           {/* Brand Info Column */}
           <div className="footer-col brand-col">
             <div className="footer-brand-header">
@@ -35,9 +35,9 @@ export default function Footer() {
               The full-stack digital growth agency. We fuse high-performance React web engineering with algorithmic Meta & Google Ads to scale ambitious brands predictably.
             </p>
             <div className="footer-social-links">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram ↗</a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn ↗</a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub ↗</a>
+              <a href="https://www.instagram.com/devlooopers?stkn=bXhqYW5udnFzcTA1" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram ↗</a>
+              <a href="https://www.linkedin.com/company/devlooopers/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn ↗</a>
+              <a href="https://github.com/Devlooopers-agency/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub ↗</a>
             </div>
           </div>
 
@@ -75,7 +75,7 @@ export default function Footer() {
               <li><Link to="/about">About Studio & Philosophy</Link></li>
               <li><Link to="/services">Capabilities & Pricing</Link></li>
               <li><Link to="/contact">Book 30-Min Strategy Call</Link></li>
-              <li><span className="contact-email">hello@devlooopers.com</span></li>
+              <li><span className="contact-email">Info@devlooopers.in</span></li>
               <li><span className="contact-loc">Mumbai, India • Worldwide Remote</span></li>
             </ul>
           </div>

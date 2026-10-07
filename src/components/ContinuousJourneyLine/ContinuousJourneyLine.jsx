@@ -29,15 +29,11 @@ export default function ContinuousJourneyLine() {
     return () => motionQuery.removeEventListener('change', handler);
   }, []);
 
-  // Recalculate and generate journey path geometry
+  // Recalculate and generate journey path geometry safely
   const generatePath = useCallback(() => {
-    // Brief RAF to ensure all dynamic page content and images are rendered
     requestAnimationFrame(() => {
       const result = buildJourneyPath(location.pathname);
-      if (!result) {
-        setPathData('');
-        setTotalPathLength(0);
-        setMilestonesData([]);
+      if (!result || !result.pathData) {
         return;
       }
 
@@ -45,33 +41,30 @@ export default function ContinuousJourneyLine() {
       setViewportWidth(result.viewportWidth);
       setDocumentHeight(result.documentHeight);
 
-      // Measure SVG path length accurately after DOM updates
       requestAnimationFrame(() => {
         if (pathRef.current) {
           try {
             const length = pathRef.current.getTotalLength();
-            setTotalPathLength(length);
+            if (length > 0) {
+              setTotalPathLength(length);
 
-            // Calculate precise milestone coordinates along the actual Bezier curve
-            const numPoints = result.points.length;
-            const computedMilestones = result.points.map((pt, index) => {
-              const progress = numPoints > 1 ? index / (numPoints - 1) : 0;
-              const pointOnPath = length > 0
-                ? pathRef.current.getPointAtLength(length * progress)
-                : { x: pt.x, y: pt.y };
+              const numPoints = result.points.length;
+              const computedMilestones = result.points.map((pt, index) => {
+                const progress = numPoints > 1 ? index / (numPoints - 1) : 0;
+                const pointOnPath = pathRef.current.getPointAtLength(length * progress) || { x: pt.x, y: pt.y };
 
-              return {
-                id: pt.id,
-                label: pt.label,
-                progress: progress,
-                x: Math.round(pointOnPath.x * 10) / 10,
-                y: Math.round(pointOnPath.y * 10) / 10
-              };
-            });
+                return {
+                  id: pt.id,
+                  label: pt.label,
+                  progress: progress,
+                  x: Math.round(pointOnPath.x * 10) / 10,
+                  y: Math.round(pointOnPath.y * 10) / 10
+                };
+              });
 
-            setMilestonesData(computedMilestones);
+              setMilestonesData(computedMilestones);
+            }
           } catch (e) {
-            // Fallback to direct coordinates if SVG math fails
             setMilestonesData(result.points.map((pt, i) => ({
               id: pt.id,
               label: pt.label,
@@ -85,12 +78,30 @@ export default function ContinuousJourneyLine() {
     });
   }, [location.pathname]);
 
-  // Re-generate on route transition and layout shifts
+  // Generate on route transition and layout shifts
   useEffect(() => {
-    const timer = setTimeout(() => {
-      generatePath();
-    }, 100);
-    return () => clearTimeout(timer);
+    generatePath();
+
+    const t1 = setTimeout(generatePath, 100);
+    const t2 = setTimeout(generatePath, 350);
+    const t3 = setTimeout(generatePath, 800);
+
+    // MutationObserver to automatically detect dynamic section mounts
+    let observer = null;
+    const targetNode = document.getElementById('root') || document.body;
+    if (targetNode && typeof MutationObserver !== 'undefined') {
+      observer = new MutationObserver(() => {
+        generatePath();
+      });
+      observer.observe(targetNode, { childList: true, subtree: true });
+    }
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      if (observer) observer.disconnect();
+    };
   }, [location.pathname, generatePath]);
 
   // Debounced resize observer
@@ -150,7 +161,7 @@ export default function ContinuousJourneyLine() {
           d={pathData}
         />
 
-        {/* Active Progress Path - Solid Crisp Gradient without Shadow */}
+        {/* Active Progress Path */}
         <path
           ref={activePathRef}
           className="journey-active-path"
@@ -181,7 +192,7 @@ export default function ContinuousJourneyLine() {
         {milestonesData.map((milestone) => (
           <div
             key={milestone.id}
-            className={`journey-milestone milestone-align-${milestone.align || 'left'}`}
+            className="journey-milestone"
             data-section={milestone.id}
             style={{
               left: `${milestone.x}px`,
@@ -189,7 +200,6 @@ export default function ContinuousJourneyLine() {
             }}
           >
             <span className="milestone-dot"></span>
-            <span className="milestone-label">{milestone.label}</span>
           </div>
         ))}
       </div>

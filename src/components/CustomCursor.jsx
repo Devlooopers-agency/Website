@@ -1,16 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function isNavigationalElement(target) {
   if (!target) return false;
-  // 1. Direct anchor tags or React Router links
   if (target.closest('a, [to], [href]')) return true;
-  // 2. Project case study cards and modal triggers
   if (target.closest('.project-card, .case-study, .work-bento-card, [data-project], [data-cursor-text]')) return true;
   return false;
 }
 
 export default function CustomCursor() {
+  const [isFinePointer, setIsFinePointer] = useState(false);
   const cursorRef = useRef(null);
   const ringRef = useRef(null);
   const dotRef = useRef(null);
@@ -19,9 +18,15 @@ export default function CustomCursor() {
   const location = useLocation();
 
   useEffect(() => {
-    const isFinePointer = window.matchMedia('(pointer:fine)').matches;
+    const isFine = window.matchMedia('(pointer: fine)').matches;
+    setIsFinePointer(isFine);
+  }, []);
+
+  useEffect(() => {
+    if (!isFinePointer) return;
+
     const cursor = cursorRef.current;
-    if (!isFinePointer || !cursor) return;
+    if (!cursor) return;
 
     const ring = ringRef.current;
     const dot = dotRef.current;
@@ -45,6 +50,7 @@ export default function CustomCursor() {
         ringX = mouseX;
         ringY = mouseY;
       }
+      startCursorAnimation();
     };
 
     window.addEventListener('pointermove', onPointerMove, { passive: true });
@@ -68,12 +74,27 @@ export default function CustomCursor() {
     };
     document.addEventListener('mouseleave', onMouseLeave);
 
+    let isAnimating = false;
+
+    function startCursorAnimation() {
+      if (!isAnimating && active) {
+        isAnimating = true;
+        cursorRafId = requestAnimationFrame(updateCursor);
+      }
+    }
+
     function updateCursor() {
       if (!active) return;
-      cursorX += (mouseX - cursorX) * 0.28;
-      cursorY += (mouseY - cursorY) * 0.28;
-      ringX += (mouseX - ringX) * 0.16;
-      ringY += (mouseY - ringY) * 0.16;
+      
+      const dx = mouseX - cursorX;
+      const dy = mouseY - cursorY;
+      const ringDx = mouseX - ringX;
+      const ringDy = mouseY - ringY;
+
+      cursorX += dx * 0.28;
+      cursorY += dy * 0.28;
+      ringX += ringDx * 0.16;
+      ringY += ringDy * 0.16;
 
       cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
       if (ring && dot) {
@@ -92,9 +113,13 @@ export default function CustomCursor() {
           currentMagneticEl = null;
         }
       }
-      cursorRafId = requestAnimationFrame(updateCursor);
+
+      if (Math.abs(dx) > 0.05 || Math.abs(dy) > 0.05 || Math.abs(ringDx) > 0.05 || Math.abs(ringDy) > 0.05 || currentMagneticEl) {
+        cursorRafId = requestAnimationFrame(updateCursor);
+      } else {
+        isAnimating = false;
+      }
     }
-    cursorRafId = requestAnimationFrame(updateCursor);
 
     const onMouseOver = (e) => {
       const target = e.target;
@@ -116,7 +141,6 @@ export default function CustomCursor() {
         return;
       }
 
-      // Restrict hover link animation exclusively to true navigational elements (a, [to], [href])
       const navLink = target.closest('a, [to], [href]');
       if (navLink) {
         const magneticBtn = target.closest('[data-magnetic="true"], .button.primary');
@@ -128,7 +152,6 @@ export default function CustomCursor() {
         return;
       }
 
-      // Default cursor state for non-navigational elements
       cursor.className = 'custom-cursor is-active';
       if (label) label.textContent = '';
       if (icon) icon.style.display = 'none';
@@ -146,7 +169,10 @@ export default function CustomCursor() {
       document.removeEventListener('mouseover', onMouseOver);
       if (currentMagneticEl) currentMagneticEl.style.transform = '';
     };
-  }, [location.pathname]);
+  }, [location.pathname, isFinePointer]);
+
+  // Return null on touch/mobile devices to avoid rendering unused cursor DOM nodes
+  if (!isFinePointer) return null;
 
   return (
     <div className="custom-cursor" id="customCursor" ref={cursorRef} aria-hidden="true">

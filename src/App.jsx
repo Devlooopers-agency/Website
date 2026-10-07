@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import CustomCursor from './components/CustomCursor.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import ScrollRevealManager from './components/ScrollRevealManager.jsx';
-import ProjectSimulatorModal from './components/ProjectSimulatorModal.jsx';
 
 import { ThemeTransitionProvider } from './components/ThemeTransition/ThemeTransitionProvider.jsx';
+import ContinuousJourneyLine from './components/ContinuousJourneyLine/ContinuousJourneyLine.jsx';
 
 import HomePage from './pages/HomePage.jsx';
 import ServicesPage from './pages/ServicesPage.jsx';
 import WorkPage from './pages/WorkPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+
+const ProjectSimulatorModal = lazy(() => import('./components/ProjectSimulatorModal.jsx'));
 
 export default function App() {
   const [activeProjectId, setActiveProjectId] = useState(null);
@@ -29,6 +31,7 @@ export default function App() {
   return (
     <ThemeTransitionProvider>
       <div className="app-container" data-theme-aware="true">
+        <ContinuousJourneyLine />
         <CustomCursor />
         <ScrollToTop />
         <ScrollRevealManager />
@@ -45,12 +48,14 @@ export default function App() {
 
         <Footer />
 
-        {activeProjectId && (
-          <ProjectSimulatorModal
-            activeProject={activeProjectId}
-            onClose={handleCloseProject}
-          />
-        )}
+        <Suspense fallback={null}>
+          {activeProjectId && (
+            <ProjectSimulatorModal
+              activeProject={activeProjectId}
+              onClose={handleCloseProject}
+            />
+          )}
+        </Suspense>
       </div>
     </ThemeTransitionProvider>
   );

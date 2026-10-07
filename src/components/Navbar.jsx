@@ -39,8 +39,24 @@ export default function Navbar() {
         id="navBrand"
         aria-label="devlooopers home"
       >
-        <img src="/assets/devlooopers-logo-d.png" alt="devlooopers icon" className="brand-logo-icon" />
-        <img src="/assets/devlooopers-logo.png" alt="devlooopers" className="brand-logo-text" />
+        <img
+          src="/assets/devlooopers-logo.png"
+          alt="devlooopers icon"
+          className="brand-logo-icon"
+          width="36"
+          height="36"
+          loading="eager"
+          decoding="async"
+        />
+        <img
+          src="/assets/devlooopers-logo.png"
+          alt="devlooopers"
+          className="brand-logo-text"
+          width="140"
+          height="30"
+          loading="eager"
+          decoding="async"
+        />
       </NavLink>
 
       <button

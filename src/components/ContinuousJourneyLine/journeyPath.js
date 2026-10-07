@@ -1,7 +1,7 @@
 // ============================================================================
 // DYNAMIC JOURNEY PATH GENERATOR
-// Calculates smooth, ultra-curvy serpentine Bezier curves anchored safely in side margins
-// Prevents any overlap with central website text and content
+// Calculates smooth, thick, serpentine Bezier curves anchored behind sections
+// Weaves dynamically across page cards and sections behind text and content
 // ============================================================================
 
 import { JOURNEY_SECTIONS, ROUTE_JOURNEY_CONFIGS } from './journeyConfig';
@@ -32,23 +32,16 @@ export function buildJourneyPath(pathname = '/') {
 
     const isLeft = index % 2 === 0;
     let x;
-    let align;
 
     if (viewportWidth >= 1200) {
-      // Desktop: Anchor stations in spacious outer side margins (away from text)
-      // Line weaves in sweeping curves across the background
-      const margin = Math.max(36, Math.min(72, viewportWidth * 0.042));
-      x = isLeft ? margin : viewportWidth - margin;
-      align = isLeft ? 'left' : 'right';
+      // Desktop: Wide sweeping serpentine curves
+      x = isLeft ? viewportWidth * 0.12 : viewportWidth * 0.88;
     } else if (isTablet) {
-      // Tablet: Anchor safely in side margins
-      const margin = Math.max(24, Math.min(48, viewportWidth * 0.035));
-      x = isLeft ? margin : viewportWidth - margin;
-      align = isLeft ? 'left' : 'right';
+      // Tablet: Sweeping side-to-side curves
+      x = isLeft ? viewportWidth * 0.10 : viewportWidth * 0.90;
     } else {
-      // Mobile: Pin stations neatly in the left gutter
-      x = 20;
-      align = 'left';
+      // Mobile: Flowing wave across margins
+      x = isLeft ? 28 : viewportWidth - 28;
     }
 
     const sectionKey = section.getAttribute('data-journey-section') || `section-${index}`;
@@ -60,7 +53,7 @@ export function buildJourneyPath(pathname = '/') {
     points.push({
       id: sectionKey,
       label: matchedConfig.label,
-      align: align,
+      align: isLeft ? 'left' : 'right',
       x: Math.round(x * 10) / 10,
       y: Math.round(centerY * 10) / 10,
       element: section
@@ -77,20 +70,12 @@ export function buildJourneyPath(pathname = '/') {
     const current = points[i];
     const dy = current.y - previous.y;
 
-    if (isMobile) {
-      // On mobile, create gentle flowing wave in the left margin area
-      const midY = (previous.y + current.y) / 2;
-      const wobbleX = (i % 2 === 1 ? 36 : 14);
-      pathData += ` C ${wobbleX} ${previous.y + dy * 0.35} ${wobbleX} ${current.y - dy * 0.35} ${current.x} ${current.y}`;
-    } else {
-      // Desktop/Tablet: Wide, luxurious sweeping S-curves across the entire background
-      const control1X = Math.round(previous.x * 10) / 10;
-      const control1Y = Math.round((previous.y + dy * 0.52) * 10) / 10;
-      const control2X = Math.round(current.x * 10) / 10;
-      const control2Y = Math.round((current.y - dy * 0.52) * 10) / 10;
+    const control1X = Math.round(previous.x * 10) / 10;
+    const control1Y = Math.round((previous.y + dy * 0.52) * 10) / 10;
+    const control2X = Math.round(current.x * 10) / 10;
+    const control2Y = Math.round((current.y - dy * 0.52) * 10) / 10;
 
-      pathData += ` C ${control1X} ${control1Y} ${control2X} ${control2Y} ${current.x} ${current.y}`;
-    }
+    pathData += ` C ${control1X} ${control1Y} ${control2X} ${control2Y} ${current.x} ${current.y}`;
   }
 
   const documentHeight = Math.max(
