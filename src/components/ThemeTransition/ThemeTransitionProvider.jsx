@@ -8,19 +8,41 @@ export const ThemeTransitionContext = createContext(null);
 
 export function ThemeTransitionProvider({ children }) {
   const location = useLocation();
-  const [themeState, setThemeState] = useState(themeEngine.state);
 
   // Determine initial theme for route
   const pageInitialTheme = useMemo(() => {
     return DEFAULT_PAGE_THEMES[location.pathname] || THEMES.LIGHT;
   }, [location.pathname]);
 
+  const [themeState, setThemeState] = useState(() => ({
+    currentTheme: pageInitialTheme,
+    targetTheme: pageInitialTheme,
+    isTransitioning: false,
+    activeSection: null
+  }));
+
   useEffect(() => {
     // Initialize theme engine for current page
     themeEngine.init(pageInitialTheme);
 
     const unsubscribe = themeEngine.subscribe((newState) => {
-      setThemeState({ ...newState });
+      setThemeState((prevState) => {
+        // Prevent re-rendering if discrete state properties have not changed
+        if (
+          prevState.currentTheme === newState.currentTheme &&
+          prevState.isTransitioning === newState.isTransitioning &&
+          prevState.targetTheme === newState.targetTheme &&
+          prevState.activeSection === newState.activeSection
+        ) {
+          return prevState;
+        }
+        return {
+          currentTheme: newState.currentTheme,
+          targetTheme: newState.targetTheme,
+          isTransitioning: newState.isTransitioning,
+          activeSection: newState.activeSection
+        };
+      });
     });
 
     return () => {
@@ -46,7 +68,7 @@ export function ThemeTransitionProvider({ children }) {
         themeEngine.targetProgress = prog;
       }
     };
-  }, [themeState]);
+  }, [themeState.currentTheme, themeState.targetTheme, themeState.isTransitioning, themeState.activeSection]);
 
   return (
     <ThemeTransitionContext.Provider value={contextValue}>

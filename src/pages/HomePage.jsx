@@ -5,6 +5,42 @@ import CapabilityGrid from '../components/CapabilityGrid.jsx';
 // Lazy-load Three.js 3D scene to keep initial mobile bundle ultra-light (FCP & LCP optimization)
 const Hero3DScene = lazy(() => import('../components/Hero3DScene.jsx'));
 
+// Lightweight, dimension-matched placeholder that preserves 0 Cumulative Layout Shift (CLS)
+// while hero heading, text, and CTAs render instantly on frame 1
+function Hero3DPlaceholder() {
+  return (
+    <div
+      className="hero-visual hero-visual-reveal hero-visual-placeholder"
+      aria-label="Interactive 3D showcase loading placeholder"
+    >
+      <div className="orbital orbital-1"></div>
+      <div className="orbital orbital-2"></div>
+      <div className="orbital orbital-3"></div>
+      <div className="scene-3d" id="heroScenePlaceholder">
+        <div className="hero-3d-skeleton-emblem">
+          <div className="skeleton-core-glow"></div>
+          <div className="skeleton-ring"></div>
+        </div>
+        <div className="float-card card-one">
+          <span>01</span><b>Shape</b><small>strategy</small>
+        </div>
+        <div className="float-card card-two">
+          <span>02</span><b>Design</b><small>experience</small>
+        </div>
+        <div className="float-card card-three">
+          <span>03</span><b>Scale</b><small>technology</small>
+        </div>
+      </div>
+      <div className="orbit-labels-container">
+        <div className="orbit-label label-a">3D / WEBGL</div>
+        <div className="orbit-label label-b">UI / UX</div>
+        <div className="orbit-label label-c">AI / CODE</div>
+      </div>
+      <div className="hero-glow"></div>
+    </div>
+  );
+}
+
 // Interactive Upgrades
 import Counter from '../components/Counter.jsx';
 import InteractiveCard from '../components/InteractiveCard.jsx';
@@ -137,7 +173,7 @@ export default function HomePage({ onOpenProject }) {
     },
     {
       q: "How soon can we start, and what is the typical turnaround?",
-      a: "Full-scale custom website builds typically ship in 2 to 4 weeks depending on scope. For Meta Ads and Digital Marketing campaigns, we can launch within 5 business days post our initial tracking audit and creative strategy blueprint."
+      a: "Full-scale custom website builds typically ship in 2 to 4 weeks depending on scope. For Meta Ads and Digital Marketing campaigns, we can launch within 5 business days post our initial tracking setup and creative strategy blueprint."
     }
   ];
 
@@ -173,8 +209,8 @@ export default function HomePage({ onOpenProject }) {
               <MagneticButton to="/work" className="button primary" data-cursor="EXPLORE">
                 Explore our work <span>→</span>
               </MagneticButton>
-              <MagneticButton to="/contact" className="text-link hero-audit-link" data-cursor="AUDIT">
-                Claim Free Growth Audit <span>↗</span>
+              <MagneticButton to="/contact" className="button secondary" data-cursor="START">
+                Start a project <span>↗</span>
               </MagneticButton>
             </div>
 
@@ -207,8 +243,8 @@ export default function HomePage({ onOpenProject }) {
             </div>
           </div>
 
-          {/* 3D WebGL Hero Visual Scene (Lazy-loaded) */}
-          <Suspense fallback={<div className="hero-3d-skeleton" aria-hidden="true" />}>
+          {/* 3D WebGL Hero Visual Scene (Lazy-loaded with non-blocking placeholder fallback) */}
+          <Suspense fallback={<Hero3DPlaceholder />}>
             <Hero3DScene />
           </Suspense>
         </div>
@@ -606,7 +642,7 @@ export default function HomePage({ onOpenProject }) {
             <div className="section-kicker">08 / NEXT MOVE</div>
             <h2>Ready to scale your <span className="gradient-text">revenue & brand?</span></h2>
             <p className="cta-desc">
-              Book a 30-minute growth strategy session. We'll audit your current website speed, SEO rankings, and Meta Ads funnel for free.
+              Book a 30-minute growth strategy session. Let's discuss your next custom web build, SEO growth, and paid media strategy.
             </p>
             <div className="cta-buttons-row">
               <Link className="button primary" to="/contact" data-cursor="SCALE" data-magnetic="true">

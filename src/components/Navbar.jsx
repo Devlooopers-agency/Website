@@ -2,6 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useThemeTransition } from './ThemeTransition/useThemeTransition.js';
 
+const routePrefetchers = {
+  '/services': () => import('../pages/ServicesPage.jsx'),
+  '/work': () => import('../pages/WorkPage.jsx'),
+  '/about': () => import('../pages/AboutPage.jsx'),
+  '/contact': () => import('../pages/ContactPage.jsx'),
+};
+
+const prefetchRoute = (path) => {
+  if (routePrefetchers[path]) {
+    routePrefetchers[path]();
+  }
+};
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -40,13 +53,19 @@ export default function Navbar() {
         aria-label="devlooopers home"
       >
         <img
-          src="/assets/devlooopers-logo.png"
+          src="/assets/devlooopers-logo-d.png"
           alt="devlooopers icon"
           className="brand-logo-icon"
-          width="36"
-          height="36"
+          width="38"
+          height="38"
           loading="eager"
           decoding="async"
+          onError={(e) => {
+            if (!e.currentTarget.dataset.fallback) {
+              e.currentTarget.dataset.fallback = '1';
+              e.currentTarget.src = './assets/devlooopers-logo-d.png';
+            }
+          }}
         />
         <img
           src="/assets/devlooopers-logo.png"
@@ -56,6 +75,12 @@ export default function Navbar() {
           height="30"
           loading="eager"
           decoding="async"
+          onError={(e) => {
+            if (!e.currentTarget.dataset.fallback) {
+              e.currentTarget.dataset.fallback = '1';
+              e.currentTarget.src = './assets/devlooopers-logo.png';
+            }
+          }}
         />
       </NavLink>
 
@@ -78,26 +103,34 @@ export default function Navbar() {
         <NavLink
           to="/services"
           className={({ isActive }) => (isActive ? 'active' : '')}
+          onMouseEnter={() => prefetchRoute('/services')}
+          onFocus={() => prefetchRoute('/services')}
         >
           <span className="nav-label">Services & Ads</span> <span className="nav-arrow" aria-hidden="true">→</span>
         </NavLink>
         <NavLink
           to="/work"
           className={({ isActive }) => (isActive ? 'active' : '')}
+          onMouseEnter={() => prefetchRoute('/work')}
+          onFocus={() => prefetchRoute('/work')}
         >
           <span className="nav-label">Work</span> <span className="nav-arrow" aria-hidden="true">→</span>
         </NavLink>
         <NavLink
           to="/about"
           className={({ isActive }) => (isActive ? 'active' : '')}
+          onMouseEnter={() => prefetchRoute('/about')}
+          onFocus={() => prefetchRoute('/about')}
         >
           <span className="nav-label">Studio</span> <span className="nav-arrow" aria-hidden="true">→</span>
         </NavLink>
         <NavLink
           to="/contact"
           className="nav-cta"
+          onMouseEnter={() => prefetchRoute('/contact')}
+          onFocus={() => prefetchRoute('/contact')}
         >
-          Get Free Audit <span>↗</span>
+          Get in Touch <span>↗</span>
         </NavLink>
       </nav>
     </header>

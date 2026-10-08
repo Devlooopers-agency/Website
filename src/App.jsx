@@ -9,13 +9,24 @@ import ScrollRevealManager from './components/ScrollRevealManager.jsx';
 import { ThemeTransitionProvider } from './components/ThemeTransition/ThemeTransitionProvider.jsx';
 import ContinuousJourneyLine from './components/ContinuousJourneyLine/ContinuousJourneyLine.jsx';
 
+// Homepage is kept eager to guarantee instant entry paint (FCP/LCP optimization)
 import HomePage from './pages/HomePage.jsx';
-import ServicesPage from './pages/ServicesPage.jsx';
-import WorkPage from './pages/WorkPage.jsx';
-import AboutPage from './pages/AboutPage.jsx';
-import ContactPage from './pages/ContactPage.jsx';
+
+// Route-level code splitting for secondary pages
+const ServicesPage = lazy(() => import('./pages/ServicesPage.jsx'));
+const WorkPage = lazy(() => import('./pages/WorkPage.jsx'));
+const AboutPage = lazy(() => import('./pages/AboutPage.jsx'));
+const ContactPage = lazy(() => import('./pages/ContactPage.jsx'));
 
 const ProjectSimulatorModal = lazy(() => import('./components/ProjectSimulatorModal.jsx'));
+
+function RouteLoadingFallback() {
+  return (
+    <div className="route-loading-fallback" aria-busy="true" aria-label="Loading page">
+      <div className="route-loading-spinner" />
+    </div>
+  );
+}
 
 export default function App() {
   const [activeProjectId, setActiveProjectId] = useState(null);
@@ -37,14 +48,16 @@ export default function App() {
         <ScrollRevealManager />
         <Navbar />
 
-        <Routes>
-          <Route path="/" element={<HomePage onOpenProject={handleOpenProject} />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/work" element={<WorkPage onOpenProject={handleOpenProject} />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<HomePage onOpenProject={handleOpenProject} />} />
-        </Routes>
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <Routes>
+            <Route path="/" element={<HomePage onOpenProject={handleOpenProject} />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/work" element={<WorkPage onOpenProject={handleOpenProject} />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<HomePage onOpenProject={handleOpenProject} />} />
+          </Routes>
+        </Suspense>
 
         <Footer />
 
