@@ -6,22 +6,6 @@ export default function Footer() {
     <footer className="mega-site-footer" data-journey-section="footer">
       <div className="shell footer-shell">
 
-        {/* Top Footer Callout Box */}
-        <div className="footer-top-cta">
-          <div className="footer-cta-left">
-            <span className="footer-badge">⚡ GET YOUR FREE AUDIT</span>
-            <h3 className="footer-cta-title">Stop leaving revenue on the table.</h3>
-            <p className="footer-cta-desc">
-              Let us analyze your current website speed, Meta Ad creatives, and SEO rankings. We'll show you exactly where you're losing customers.
-            </p>
-          </div>
-          <div className="footer-cta-right">
-            <Link to="/contact" className="button primary footer-btn" data-cursor="CLAIM">
-              Claim Free Growth Audit <span>→</span>
-            </Link>
-          </div>
-        </div>
-
         {/* 4-Column Mega Navigation */}
         <div className="footer-columns-grid">
 

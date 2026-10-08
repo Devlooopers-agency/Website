@@ -130,7 +130,7 @@ export default function Navbar() {
           onMouseEnter={() => prefetchRoute('/contact')}
           onFocus={() => prefetchRoute('/contact')}
         >
-          Get Free Audit <span>↗</span>
+          Get in Touch <span>↗</span>
         </NavLink>
       </nav>
     </header>
