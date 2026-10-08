@@ -29,19 +29,48 @@ export default function ContinuousJourneyLine() {
     return () => motionQuery.removeEventListener('change', handler);
   }, []);
 
+  const lastGeometryRef = useRef({ pathData: '', documentHeight: 0, viewportWidth: 0 });
+  const pendingRafRef = useRef(null);
+  const pendingMilestoneRafRef = useRef(null);
+
   // Recalculate and generate journey path geometry safely
   const generatePath = useCallback(() => {
-    requestAnimationFrame(() => {
+    if (pendingRafRef.current) {
+      cancelAnimationFrame(pendingRafRef.current);
+    }
+
+    pendingRafRef.current = requestAnimationFrame(() => {
+      pendingRafRef.current = null;
       const result = buildJourneyPath(location.pathname);
       if (!result || !result.pathData) {
         return;
       }
 
+      // Optimization: avoid re-rendering SVG and recomputing layout if geometry is identical
+      if (
+        result.pathData === lastGeometryRef.current.pathData &&
+        result.documentHeight === lastGeometryRef.current.documentHeight &&
+        result.viewportWidth === lastGeometryRef.current.viewportWidth
+      ) {
+        return;
+      }
+
+      lastGeometryRef.current = {
+        pathData: result.pathData,
+        documentHeight: result.documentHeight,
+        viewportWidth: result.viewportWidth
+      };
+
       setPathData(result.pathData);
       setViewportWidth(result.viewportWidth);
       setDocumentHeight(result.documentHeight);
 
-      requestAnimationFrame(() => {
+      if (pendingMilestoneRafRef.current) {
+        cancelAnimationFrame(pendingMilestoneRafRef.current);
+      }
+
+      pendingMilestoneRafRef.current = requestAnimationFrame(() => {
+        pendingMilestoneRafRef.current = null;
         if (pathRef.current) {
           try {
             const length = pathRef.current.getTotalLength();
@@ -78,28 +107,65 @@ export default function ContinuousJourneyLine() {
     });
   }, [location.pathname]);
 
-  // Generate on route transition and layout shifts
+  // Generate on route transition and layout shifts with debounced scheduling
   useEffect(() => {
     generatePath();
 
-    const t1 = setTimeout(generatePath, 100);
-    const t2 = setTimeout(generatePath, 350);
-    const t3 = setTimeout(generatePath, 800);
-
-    // MutationObserver to automatically detect dynamic section mounts
-    let observer = null;
-    const targetNode = document.getElementById('root') || document.body;
-    if (targetNode && typeof MutationObserver !== 'undefined') {
-      observer = new MutationObserver(() => {
+    let debounceTimer = null;
+    const scheduleDebouncedGenerate = () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
         generatePath();
+      }, 120);
+    };
+
+    // Staggered initial checks for late-mounting images/fonts
+    const t1 = setTimeout(generatePath, 150);
+    const t2 = setTimeout(generatePath, 600);
+
+    // Narrowed MutationObserver: Target <main> or .app-container instead of document.body/#root
+    let observer = null;
+    const targetNode = document.querySelector('main') || document.querySelector('.app-container') || document.getElementById('root');
+
+    if (targetNode && typeof MutationObserver !== 'undefined') {
+      observer = new MutationObserver((mutations) => {
+        // Filter: Only schedule recalculation if a journey section was mounted/unmounted
+        const hasRelevantSectionChange = mutations.some((m) => {
+          if (m.type === 'childList') {
+            for (let i = 0; i < m.addedNodes.length; i++) {
+              const node = m.addedNodes[i];
+              if (node.nodeType === 1) {
+                if (node.hasAttribute && node.hasAttribute('data-journey-section')) return true;
+                if (node.querySelector && node.querySelector('[data-journey-section]')) return true;
+                if (node.tagName === 'SECTION' || node.tagName === 'MAIN') return true;
+              }
+            }
+            for (let i = 0; i < m.removedNodes.length; i++) {
+              const node = m.removedNodes[i];
+              if (node.nodeType === 1) {
+                if (node.hasAttribute && node.hasAttribute('data-journey-section')) return true;
+                if (node.querySelector && node.querySelector('[data-journey-section]')) return true;
+                if (node.tagName === 'SECTION' || node.tagName === 'MAIN') return true;
+              }
+            }
+          }
+          return false;
+        });
+
+        if (hasRelevantSectionChange) {
+          scheduleDebouncedGenerate();
+        }
       });
+
       observer.observe(targetNode, { childList: true, subtree: true });
     }
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
-      clearTimeout(t3);
+      if (debounceTimer) clearTimeout(debounceTimer);
+      if (pendingRafRef.current) cancelAnimationFrame(pendingRafRef.current);
+      if (pendingMilestoneRafRef.current) cancelAnimationFrame(pendingMilestoneRafRef.current);
       if (observer) observer.disconnect();
     };
   }, [location.pathname, generatePath]);
@@ -168,23 +234,6 @@ export default function ContinuousJourneyLine() {
           d={pathData}
           stroke="url(#journeyGradient)"
         />
-
-        {/* Traveling Node */}
-        <g ref={travelerRef} className="journey-traveler">
-          <circle
-            ref={travelerGlowRef}
-            className="traveler-glow"
-            cx="0"
-            cy="0"
-            r="18"
-          />
-          <circle
-            className="traveler-core"
-            cx="0"
-            cy="0"
-            r="9"
-          />
-        </g>
       </svg>
 
       {/* Dynamic Milestones Layer */}

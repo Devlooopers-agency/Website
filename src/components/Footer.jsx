@@ -28,7 +28,21 @@ export default function Footer() {
           {/* Brand Info Column */}
           <div className="footer-col brand-col">
             <div className="footer-brand-header">
-              <img src="/assets/devlooopers-logo-d.png" alt="devlooopers icon" className="footer-logo-icon" />
+              <img
+                src="/assets/devlooopers-logo-d.png"
+                alt="devlooopers icon"
+                className="footer-logo-icon"
+                width="26"
+                height="26"
+                loading="lazy"
+                decoding="async"
+                onError={(e) => {
+                  if (!e.currentTarget.dataset.fallback) {
+                    e.currentTarget.dataset.fallback = '1';
+                    e.currentTarget.src = './assets/devlooopers-logo-d.png';
+                  }
+                }}
+              />
               <span className="footer-brand-title">devlooopers</span>
             </div>
             <p className="footer-brand-desc">

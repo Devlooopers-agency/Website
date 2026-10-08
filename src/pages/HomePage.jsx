@@ -5,6 +5,42 @@ import CapabilityGrid from '../components/CapabilityGrid.jsx';
 // Lazy-load Three.js 3D scene to keep initial mobile bundle ultra-light (FCP & LCP optimization)
 const Hero3DScene = lazy(() => import('../components/Hero3DScene.jsx'));
 
+// Lightweight, dimension-matched placeholder that preserves 0 Cumulative Layout Shift (CLS)
+// while hero heading, text, and CTAs render instantly on frame 1
+function Hero3DPlaceholder() {
+  return (
+    <div
+      className="hero-visual hero-visual-reveal hero-visual-placeholder"
+      aria-label="Interactive 3D showcase loading placeholder"
+    >
+      <div className="orbital orbital-1"></div>
+      <div className="orbital orbital-2"></div>
+      <div className="orbital orbital-3"></div>
+      <div className="scene-3d" id="heroScenePlaceholder">
+        <div className="hero-3d-skeleton-emblem">
+          <div className="skeleton-core-glow"></div>
+          <div className="skeleton-ring"></div>
+        </div>
+        <div className="float-card card-one">
+          <span>01</span><b>Shape</b><small>strategy</small>
+        </div>
+        <div className="float-card card-two">
+          <span>02</span><b>Design</b><small>experience</small>
+        </div>
+        <div className="float-card card-three">
+          <span>03</span><b>Scale</b><small>technology</small>
+        </div>
+      </div>
+      <div className="orbit-labels-container">
+        <div className="orbit-label label-a">3D / WEBGL</div>
+        <div className="orbit-label label-b">UI / UX</div>
+        <div className="orbit-label label-c">AI / CODE</div>
+      </div>
+      <div className="hero-glow"></div>
+    </div>
+  );
+}
+
 // Interactive Upgrades
 import Counter from '../components/Counter.jsx';
 import InteractiveCard from '../components/InteractiveCard.jsx';
@@ -207,8 +243,8 @@ export default function HomePage({ onOpenProject }) {
             </div>
           </div>
 
-          {/* 3D WebGL Hero Visual Scene (Lazy-loaded) */}
-          <Suspense fallback={<div className="hero-3d-skeleton" aria-hidden="true" />}>
+          {/* 3D WebGL Hero Visual Scene (Lazy-loaded with non-blocking placeholder fallback) */}
+          <Suspense fallback={<Hero3DPlaceholder />}>
             <Hero3DScene />
           </Suspense>
         </div>

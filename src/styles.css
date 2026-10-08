@@ -327,17 +327,17 @@ p {
   margin: 0;
   padding: 0.75rem clamp(1.25rem, 3.5vw, 3rem);
   padding-top: calc(0.75rem + var(--sat));
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--theme-navbar-bg, rgba(255, 255, 255, 0.92));
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(231, 235, 242, 0.6);
+  border-bottom: 1px solid var(--theme-navbar-border, rgba(231, 235, 242, 0.6));
 }
 
 .brand {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   letter-spacing: -0.05em;
@@ -403,11 +403,13 @@ p {
 }
 
 .brand-logo-icon {
-  width: 48px;
-  height: 48px;
+  display: block;
+  width: 38px;
+  height: 38px;
   object-fit: contain;
   filter: drop-shadow(0 3px 14px rgba(83, 80, 215, 0.28));
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+  flex-shrink: 0;
 }
 
 .brand:hover .brand-logo-icon {
@@ -416,9 +418,12 @@ p {
 }
 
 .brand-logo-text {
-  height: 30px;
+  display: block;
+  height: 28px;
   width: auto;
+  max-width: 160px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .footer-brand {
@@ -855,6 +860,122 @@ p {
   .hero-touch-hint {
     display: inline-flex;
   }
+}
+
+/* Hero 3D Visual Placeholder & Non-Blocking Skeleton State */
+.hero-visual-placeholder {
+  pointer-events: none;
+}
+
+.hero-3d-skeleton-emblem {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.skeleton-core-glow {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(83, 80, 215, 0.35) 0%, rgba(48, 161, 191, 0.18) 60%, transparent 100%);
+  filter: blur(8px);
+  animation: skeletonPulse 2.4s ease-in-out infinite alternate;
+}
+
+.skeleton-ring {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(83, 80, 215, 0.3);
+  animation: skeletonSpin 12s linear infinite;
+}
+
+@keyframes skeletonPulse {
+  0% { transform: scale(0.92); opacity: 0.5; }
+  100% { transform: scale(1.08); opacity: 0.9; }
+}
+
+@keyframes skeletonSpin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Graceful Fallback if WebGL is unavailable */
+.hero-fallback-visual {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fallback-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(83, 80, 215, 0.45) 0%, rgba(57, 207, 114, 0.2) 60%, transparent 100%);
+  filter: blur(16px);
+}
+
+.fallback-ring {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.fallback-ring-outer {
+  width: 220px;
+  height: 220px;
+  border: 1.5px solid rgba(83, 80, 215, 0.4);
+  transform: rotateX(68deg) rotateZ(25deg);
+}
+
+.fallback-ring-inner {
+  width: 170px;
+  height: 170px;
+  border: 1.5px solid rgba(57, 207, 114, 0.35);
+  transform: rotateX(68deg) rotateZ(-30deg);
+}
+
+.fallback-badge {
+  position: relative;
+  z-index: 2;
+  font: 700 0.78rem "Space Grotesk", sans-serif;
+  letter-spacing: 0.16em;
+  padding: 8px 18px;
+  background: rgba(16, 19, 27, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 99px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Route Code-Splitting Lightweight Fallback */
+.route-loading-fallback {
+  min-height: calc(100vh - var(--site-header-height) - 180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.route-loading-spinner {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(83, 80, 215, 0.15);
+  border-top-color: var(--indigo, #5350d7);
+  animation: routeSpinnerRotate 0.75s linear infinite;
+}
+
+@keyframes routeSpinnerRotate {
+  100% { transform: rotate(360deg); }
 }
 
 /* Floating UI Cards */
@@ -3482,12 +3603,15 @@ body.intro-running .site-header .menu-toggle {
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-body.header-ready .site-header .brand {
+body.header-ready .site-header .brand,
+body:not(.intro-running) .site-header .brand {
   opacity: 1;
 }
 
 body.header-ready .site-header .nav,
-body.header-ready .site-header .menu-toggle {
+body.header-ready .site-header .menu-toggle,
+body:not(.intro-running) .site-header .nav,
+body:not(.intro-running) .site-header .menu-toggle {
   opacity: 1;
   transform: none;
 }

@@ -19,11 +19,11 @@ export function useJourneyScroll(refs, metrics) {
   useEffect(() => {
     const journeyPath = pathRef.current;
     const activePath = activePathRef.current;
-    const traveler = travelerRef.current;
-    const travelerGlow = travelerGlowRef.current;
-    const milestonesContainer = milestonesContainerRef.current;
+    const traveler = travelerRef?.current || null;
+    const travelerGlow = travelerGlowRef?.current || null;
+    const milestonesContainer = milestonesContainerRef?.current || null;
 
-    if (!journeyPath || !activePath || !traveler || totalPathLength <= 0) {
+    if (!journeyPath || !activePath || totalPathLength <= 0) {
       return;
     }
 
@@ -35,10 +35,22 @@ export function useJourneyScroll(refs, metrics) {
     activePath.style.strokeDasharray = `${totalPathLength} ${totalPathLength}`;
     activePath.style.strokeDashoffset = `${totalPathLength}`;
 
+    // Cache milestone elements once when milestonesData updates to avoid querySelectorAll on every RAF
+    let cachedMilestones = milestonesContainer ? Array.from(milestonesContainer.querySelectorAll('.journey-milestone')) : [];
+
+    // Cache maxScroll to avoid reading documentElement.scrollHeight on every scroll event
+    let cachedMaxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+
+    const updateMaxScroll = () => {
+      cachedMaxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    };
+
+    window.addEventListener('resize', updateMaxScroll, { passive: true });
+    window.addEventListener('orientationchange', updateMaxScroll, { passive: true });
+
     const getScrollProgress = () => {
       const scrollY = window.scrollY || window.pageYOffset || 0;
-      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const progress = scrollY / maxScroll;
+      const progress = scrollY / cachedMaxScroll;
       return Math.max(0, Math.min(1, progress));
     };
 
@@ -62,26 +74,27 @@ export function useJourneyScroll(refs, metrics) {
       // 1. Draw Active Path
       activePath.style.strokeDashoffset = `${Math.max(0, totalPathLength - drawLength)}`;
 
-      // 2. Position Traveling Node
-      try {
-        const clampedLength = Math.max(0, Math.min(totalPathLength, drawLength));
-        const point = journeyPath.getPointAtLength(clampedLength);
-        if (point && !isNaN(point.x) && !isNaN(point.y)) {
-          traveler.style.transform = `translate3d(${point.x}px, ${point.y}px, 0)`;
-        }
+      // 2. Position Traveling Node (if present)
+      if (traveler) {
+        try {
+          const clampedLength = Math.max(0, Math.min(totalPathLength, drawLength));
+          const point = journeyPath.getPointAtLength(clampedLength);
+          if (point && !isNaN(point.x) && !isNaN(point.y)) {
+            traveler.style.transform = `translate3d(${point.x}px, ${point.y}px, 0)`;
+          }
 
-        if (!isReducedMotion && travelerGlow) {
-          const glowScale = 1 + Math.sin(performance.now() * 0.004) * 0.15;
-          travelerGlow.style.transform = `scale(${glowScale.toFixed(3)})`;
+          if (!isReducedMotion && travelerGlow) {
+            const glowScale = 1 + Math.sin(performance.now() * 0.004) * 0.15;
+            travelerGlow.style.transform = `scale(${glowScale.toFixed(3)})`;
+          }
+        } catch (e) {
+          // Path calculation safety fallback
         }
-      } catch (e) {
-        // Path calculation safety fallback
       }
 
-      // 3. Update Milestone States
-      if (milestonesContainer && milestonesData && milestonesData.length > 0) {
-        const milestoneEls = milestonesContainer.querySelectorAll('.journey-milestone');
-        milestoneEls.forEach((el, index) => {
+      // 3. Update Milestone States (using pre-cached milestone element array with state diff check)
+      if (cachedMilestones.length > 0 && milestonesData && milestonesData.length > 0) {
+        cachedMilestones.forEach((el, index) => {
           const mData = milestonesData[index];
           if (!mData) return;
 
@@ -89,11 +102,17 @@ export function useJourneyScroll(refs, metrics) {
           const isCompleted = progress >= mProgress - 0.005;
           const isActive = Math.abs(progress - mProgress) < 0.035;
 
-          if (isCompleted) el.classList.add('completed');
-          else el.classList.remove('completed');
+          if (isCompleted && !el.classList.contains('completed')) {
+            el.classList.add('completed');
+          } else if (!isCompleted && el.classList.contains('completed')) {
+            el.classList.remove('completed');
+          }
 
-          if (isActive) el.classList.add('active');
-          else el.classList.remove('active');
+          if (isActive && !el.classList.contains('active')) {
+            el.classList.add('active');
+          } else if (!isActive && el.classList.contains('active')) {
+            el.classList.remove('active');
+          }
         });
       }
 
@@ -127,6 +146,8 @@ export function useJourneyScroll(refs, metrics) {
     return () => {
       isMounted = false;
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', updateMaxScroll);
+      window.removeEventListener('orientationchange', updateMaxScroll);
       if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
     };
   }, [totalPathLength, milestonesData, isReducedMotion]);

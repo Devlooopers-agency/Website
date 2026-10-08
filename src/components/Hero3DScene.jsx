@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 export default function Hero3DScene() {
@@ -7,16 +7,23 @@ export default function Hero3DScene() {
   const card1Ref = useRef(null);
   const card2Ref = useRef(null);
   const card3Ref = useRef(null);
+  const [webGLFailed, setWebGLFailed] = useState(false);
 
   useEffect(() => {
     const heroScene = containerRef.current;
     const heroCanvas = canvasRef.current;
     if (!heroScene || !heroCanvas) return;
 
+    // Detect user preference for reduced motion
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     let active = true;
     let heroRafId = null;
     let heroObserver = null;
     let isHeroInView = true;
+    let isTabVisible = typeof document !== 'undefined' ? !document.hidden : true;
 
     // Shared Model Builder
     function buildDevlooopers3DModel(scene, rootGroup, objectGroup) {
@@ -143,38 +150,49 @@ export default function Hero3DScene() {
     }
 
     const isDesktop = window.innerWidth >= 861;
+    const isMobileScreen = window.innerWidth < 768;
     const width = heroScene.clientWidth || (isDesktop ? 500 : 340);
     const height = heroScene.clientHeight || (isDesktop ? 500 : 280);
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(isDesktop ? 45 : 48, width / height, 0.1, 100);
-    camera.position.set(0, 0, isDesktop ? 7.5 : 7.8);
+    let scene, camera, renderer, rootGroup, objectGroup, modelParts;
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas: heroCanvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance'
-    });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(width, height, false);
-    if (renderer.toneMapping !== undefined) {
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.25;
+    try {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(isDesktop ? 45 : 48, width / height, 0.1, 100);
+      camera.position.set(0, 0, isDesktop ? 7.5 : 7.8);
+
+      // Optimization: On mobile (<768px), disable antialias and cap pixelRatio at 1 to dramatically reduce GPU fillrate
+      renderer = new THREE.WebGLRenderer({
+        canvas: heroCanvas,
+        alpha: true,
+        antialias: !isMobileScreen,
+        powerPreference: 'high-performance'
+      });
+
+      renderer.setPixelRatio(isMobileScreen ? 1 : Math.min(window.devicePixelRatio || 1, 1.75));
+      renderer.setSize(width, height, false);
+      if (renderer.toneMapping !== undefined) {
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.25;
+      }
+
+      rootGroup = new THREE.Group();
+      if (isDesktop) {
+        rootGroup.position.x = 0.35;
+      } else {
+        rootGroup.scale.set(0.88, 0.88, 0.88);
+      }
+      scene.add(rootGroup);
+
+      objectGroup = new THREE.Group();
+      rootGroup.add(objectGroup);
+
+      modelParts = buildDevlooopers3DModel(scene, rootGroup, objectGroup);
+    } catch (e) {
+      console.warn('WebGL initialization failed, falling back to CSS experience:', e);
+      setWebGLFailed(true);
+      return;
     }
-
-    const rootGroup = new THREE.Group();
-    if (isDesktop) {
-      rootGroup.position.x = 0.35;
-    } else {
-      rootGroup.scale.set(0.88, 0.88, 0.88);
-    }
-    scene.add(rootGroup);
-
-    const objectGroup = new THREE.Group();
-    rootGroup.add(objectGroup);
-
-    const modelParts = buildDevlooopers3DModel(scene, rootGroup, objectGroup);
 
     let mouseX = 0, mouseY = 0;
     const onHeroPointerMove = (e) => {
@@ -213,54 +231,69 @@ export default function Hero3DScene() {
 
     const clock = new THREE.Clock();
 
+    function renderSceneFrame() {
+      const elapsedTime = clock.getElapsedTime();
+      const delta = clock.getDelta();
+
+      if (window.innerWidth >= 861) {
+        objectGroup.rotation.y = elapsedTime * 0.45 + mouseX * 0.85;
+        objectGroup.rotation.x = Math.sin(elapsedTime * 0.8) * 0.1 - mouseY * 0.55;
+        objectGroup.position.y = Math.sin(elapsedTime * 1.2) * 0.12;
+
+        const card1 = card1Ref.current;
+        const card2 = card2Ref.current;
+        const card3 = card3Ref.current;
+        if (card1) card1.style.transform = `translate3d(${mouseX * -18}px, ${mouseY * -14}px, 0)`;
+        if (card2) card2.style.transform = `translate3d(${mouseX * 22}px, ${mouseY * 18}px, 0)`;
+        if (card3) card3.style.transform = `translate3d(${mouseX * -12}px, ${mouseY * 20}px, 0)`;
+      } else {
+        if (!isDragging) {
+          rotY += velX; velX *= 0.92; rotY *= 0.98;
+          rotX -= velY; velY *= 0.92; rotX *= 0.98;
+        }
+        objectGroup.rotation.y = elapsedTime * 0.35 + rotY;
+        objectGroup.rotation.x = Math.sin(elapsedTime * 0.6) * 0.08 + rotX;
+      }
+
+      modelParts.satelliteGroup.rotation.z = Math.sin(elapsedTime * 0.7) * 0.35;
+      modelParts.satelliteGroup.rotation.y = elapsedTime * 0.3;
+
+      modelParts.shards.forEach(shard => {
+        shard.userData.angle += delta * shard.userData.speed;
+        const rad = shard.userData.radius + Math.sin(elapsedTime * 2 + shard.userData.speed) * 0.15;
+        shard.position.x = Math.cos(shard.userData.angle) * rad;
+        shard.position.z = Math.sin(shard.userData.angle) * rad;
+        shard.position.y = shard.userData.yOffset + Math.cos(elapsedTime * 1.8 + shard.userData.speed) * 0.25;
+        shard.rotation.x += delta * 2.0; shard.rotation.y += delta * 1.8;
+      });
+
+      modelParts.ring1.rotation.z = elapsedTime * 0.15;
+      modelParts.ring2.rotation.y = -elapsedTime * 0.12;
+
+      renderer.render(scene, camera);
+    }
+
     function renderLoop() {
       if (!active) return;
-      if (isHeroInView) {
-        const elapsedTime = clock.getElapsedTime();
-        const delta = clock.getDelta();
-
-        if (window.innerWidth >= 861) {
-          objectGroup.rotation.y = elapsedTime * 0.45 + mouseX * 0.85;
-          objectGroup.rotation.x = Math.sin(elapsedTime * 0.8) * 0.1 - mouseY * 0.55;
-          objectGroup.position.y = Math.sin(elapsedTime * 1.2) * 0.12;
-
-          const card1 = card1Ref.current;
-          const card2 = card2Ref.current;
-          const card3 = card3Ref.current;
-          if (card1) card1.style.transform = `translate3d(${mouseX * -18}px, ${mouseY * -14}px, 0)`;
-          if (card2) card2.style.transform = `translate3d(${mouseX * 22}px, ${mouseY * 18}px, 0)`;
-          if (card3) card3.style.transform = `translate3d(${mouseX * -12}px, ${mouseY * 20}px, 0)`;
-        } else {
-          if (!isDragging) {
-            rotY += velX; velX *= 0.92; rotY *= 0.98;
-            rotX -= velY; velY *= 0.92; rotX *= 0.98;
-          }
-          objectGroup.rotation.y = elapsedTime * 0.35 + rotY;
-          objectGroup.rotation.x = Math.sin(elapsedTime * 0.6) * 0.08 + rotX;
-        }
-
-        modelParts.satelliteGroup.rotation.z = Math.sin(elapsedTime * 0.7) * 0.35;
-        modelParts.satelliteGroup.rotation.y = elapsedTime * 0.3;
-
-        modelParts.shards.forEach(shard => {
-          shard.userData.angle += delta * shard.userData.speed;
-          const rad = shard.userData.radius + Math.sin(elapsedTime * 2 + shard.userData.speed) * 0.15;
-          shard.position.x = Math.cos(shard.userData.angle) * rad;
-          shard.position.z = Math.sin(shard.userData.angle) * rad;
-          shard.position.y = shard.userData.yOffset + Math.cos(elapsedTime * 1.8 + shard.userData.speed) * 0.25;
-          shard.rotation.x += delta * 2.0; shard.rotation.y += delta * 1.8;
-        });
-
-        modelParts.ring1.rotation.z = elapsedTime * 0.15;
-        modelParts.ring2.rotation.y = -elapsedTime * 0.12;
-
-        renderer.render(scene, camera);
+      if (isHeroInView && isTabVisible && !prefersReducedMotion) {
+        renderSceneFrame();
       }
       heroRafId = requestAnimationFrame(renderLoop);
     }
-    heroRafId = requestAnimationFrame(renderLoop);
 
-    // IntersectionObserver to save GPU/Battery
+    if (prefersReducedMotion) {
+      renderSceneFrame();
+    } else {
+      heroRafId = requestAnimationFrame(renderLoop);
+    }
+
+    // Visibility change listener to pause GPU draw calls when tab is hidden
+    const onVisibilityChange = () => {
+      isTabVisible = typeof document !== 'undefined' ? !document.hidden : true;
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    // IntersectionObserver to pause GPU draw calls when offscreen
     if ('IntersectionObserver' in window) {
       heroObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
@@ -271,11 +304,14 @@ export default function Hero3DScene() {
     }
 
     const onHeroResize = () => {
+      if (!renderer || !camera) return;
       const isDesk = window.innerWidth >= 861;
+      const isMob = window.innerWidth < 768;
       const w = heroScene.clientWidth || (isDesk ? 500 : 340);
       const h = heroScene.clientHeight || (isDesk ? 500 : 280);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
+      renderer.setPixelRatio(isMob ? 1 : Math.min(window.devicePixelRatio || 1, 1.75));
       renderer.setSize(w, h, false);
       if (isDesk) {
         rootGroup.position.x = 0.35;
@@ -284,6 +320,9 @@ export default function Hero3DScene() {
         rootGroup.position.x = 0;
         rootGroup.scale.set(0.88, 0.88, 0.88);
       }
+      if (prefersReducedMotion) {
+        renderSceneFrame();
+      }
     };
     window.addEventListener('resize', onHeroResize);
 
@@ -291,12 +330,15 @@ export default function Hero3DScene() {
       active = false;
       if (heroRafId) cancelAnimationFrame(heroRafId);
       if (heroObserver) heroObserver.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('pointermove', onHeroPointerMove);
       heroScene.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('pointermove', onMobilePointerMove);
       window.removeEventListener('pointerup', onPointerUp);
       window.removeEventListener('resize', onHeroResize);
-      renderer.dispose();
+      if (renderer) {
+        renderer.dispose();
+      }
     };
   }, []);
 
@@ -309,7 +351,16 @@ export default function Hero3DScene() {
       <div className="orbital orbital-2"></div>
       <div className="orbital orbital-3"></div>
       <div className="scene-3d" id="heroScene" ref={containerRef}>
-        <canvas id="heroCanvas" ref={canvasRef} width="500" height="500"></canvas>
+        {!webGLFailed ? (
+          <canvas id="heroCanvas" ref={canvasRef} width="500" height="500"></canvas>
+        ) : (
+          <div className="hero-fallback-visual" aria-label="Devlooopers brand graphic">
+            <div className="fallback-glow"></div>
+            <div className="fallback-ring fallback-ring-outer"></div>
+            <div className="fallback-ring fallback-ring-inner"></div>
+            <div className="fallback-badge">DEVLOOOPERS</div>
+          </div>
+        )}
         <div className="float-card card-one" ref={card1Ref}>
           <span>01</span><b>Shape</b><small>strategy</small>
         </div>

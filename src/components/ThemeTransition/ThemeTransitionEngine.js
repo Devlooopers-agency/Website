@@ -14,7 +14,14 @@ export class ThemeTransitionEngine {
       nextSection: null,
       isTransitioning: false,
       direction: 'down', // 'down' | 'up'
-      wipeY: 0 // percentage or pixels for layer offset
+      wipeY: 0
+    };
+
+    this.lastNotified = {
+      currentTheme: THEMES.LIGHT,
+      targetTheme: THEMES.LIGHT,
+      isTransitioning: false,
+      activeSection: null
     };
 
     this.targetProgress = 0;
@@ -30,7 +37,7 @@ export class ThemeTransitionEngine {
 
   subscribe(listener) {
     this.listeners.add(listener);
-    // Notify immediately with current state
+    // Notify immediately with current discrete state
     listener(this.state);
     return () => {
       this.listeners.delete(listener);
@@ -46,8 +53,16 @@ export class ThemeTransitionEngine {
     this.state.targetTheme = initialTheme;
     this.state.sourceTheme = initialTheme;
     this.state.transitionProgress = 0;
+    this.state.isTransitioning = false;
     this.currentProgress = 0;
     this.targetProgress = 0;
+
+    this.lastNotified = {
+      currentTheme: initialTheme,
+      targetTheme: initialTheme,
+      isTransitioning: false,
+      activeSection: null
+    };
 
     this.applyCSSVariables(initialTheme);
     this.refreshSections();
@@ -89,7 +104,6 @@ export class ThemeTransitionEngine {
 
     const scrollY = window.scrollY;
     const vh = window.innerHeight;
-    const triggerOffset = vh * (1 - themeConfig.transitionWindowRatio);
 
     let activeIdx = 0;
 
@@ -178,7 +192,7 @@ export class ThemeTransitionEngine {
       this.applyCSSVariables(this.state.currentTheme);
     }
 
-    // Pass data attribute to root html/body
+    // Continuous visual updates are handled off-thread by CSS variables and HTML attribute
     const rootEl = document.documentElement;
     if (this.state.isTransitioning) {
       rootEl.setAttribute('data-theme-transitioning', 'true');
@@ -187,7 +201,22 @@ export class ThemeTransitionEngine {
       rootEl.setAttribute('data-theme', this.state.currentTheme);
     }
 
-    this.notify();
+    // Only dispatch React state update when discrete active state changes (eliminates 60-120 FPS React re-renders)
+    const hasDiscreteChange =
+      this.state.currentTheme !== this.lastNotified.currentTheme ||
+      this.state.isTransitioning !== this.lastNotified.isTransitioning ||
+      this.state.targetTheme !== this.lastNotified.targetTheme ||
+      this.state.activeSection !== this.lastNotified.activeSection;
+
+    if (hasDiscreteChange) {
+      this.lastNotified = {
+        currentTheme: this.state.currentTheme,
+        isTransitioning: this.state.isTransitioning,
+        targetTheme: this.state.targetTheme,
+        activeSection: this.state.activeSection
+      };
+      this.notify();
+    }
   }
 
   applyCSSVariables(theme) {

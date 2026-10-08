@@ -60,7 +60,7 @@
 .faq-interactive-card,
 .cta-panel,
 .footer-shell,
-p, h1, h2, h3, h4, span {
+p, h1, h2, h3, h4 {
   position: relative;
   z-index: 3;
 }
@@ -98,24 +98,32 @@ body.modal-open .journey-line-container {
   stroke-width: 14px;
   opacity: 1;
   stroke-dashoffset: 0;
-  filter: drop-shadow(0 0 14px rgba(48, 161, 191, 0.5));
+  /* Hardware-friendly desktop glow: tight kernel eliminates massive convolution stalls */
+  filter: drop-shadow(0 0 6px rgba(48, 161, 191, 0.35));
 }
 
-/* Traveling Energy Node */
-.journey-traveler {
-  transform-origin: center;
-  pointer-events: none;
-  will-change: transform;
+@media (max-width: 768px) {
+  .journey-active-path {
+    stroke-width: 10px;
+    /* Eliminate GPU convolution blur on mobile to guarantee smooth 60fps/120fps scrolling */
+    filter: none !important;
+  }
 }
 
-.traveler-glow {
-  fill: rgba(48, 161, 191, 0.35);
-  transform-origin: center;
-  will-change: transform;
+@media (prefers-reduced-motion: reduce) {
+  .journey-active-path {
+    filter: none !important;
+  }
 }
 
+/* Traveling Energy Node - Hidden per request */
+.journey-traveler,
+.traveler-glow,
 .traveler-core {
-  fill: var(--journey-cyan);
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Milestones Container */
